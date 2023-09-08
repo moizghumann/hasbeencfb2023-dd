@@ -159,7 +159,7 @@ export default function CDashboard(props: CDashboardProps) {
                             fontSize="base"
                             lineHeight="8"
                           >
-                            <Text width={'90%'} whiteSpace={'normal'} opacity={'60%'}>
+                            <Text width={'90%'} whiteSpace={'normal'} opacity={'65%'}>
                               {moment(sport.commence_time).format(
                                 "DD/MM/YYYY dddd MMM HH:mm A"
                               )}
@@ -176,7 +176,7 @@ export default function CDashboard(props: CDashboardProps) {
                                   }
                                 </Text>
                               </HStack>
-                              <Text color="#A0A8B1">vs</Text>
+                              <Text opacity={'70%'}>vs</Text>
                               <HStack>
                                 {/* <Image src={team2Src} width={"20px"} /> */}
                                 <Text opacity={'70%'} fontWeight={'medium'}>
