@@ -184,6 +184,10 @@ export default function Dashboard() {
     }
   };
 
+  const onRemoveBet = (currentIndex: number) => {
+    setBets(bets.filter((_, i) => i !== currentIndex));
+  };
+
   return (
     <Layout>
       <ConfirmModal
@@ -205,6 +209,13 @@ export default function Dashboard() {
             >
               <Thead>
                 <Tr bgColor="#F3F4F7">
+                  <Th
+                    fontSize="base"
+                    textAlign="center"
+                    display={isSubmittedForCurrentWeek ? "none" : "block"}
+                  >
+                    Action
+                  </Th>
                   <Th fontSize="base" textAlign="center">
                     Team(s)
                   </Th>
@@ -220,8 +231,17 @@ export default function Dashboard() {
                 </Tr>
               </Thead>
               <Tbody>
-                {bets.map((bet) => (
+                {bets.map((bet, i) => (
                   <Tr bgColor="#F3F4F7">
+                    <Td display={isSubmittedForCurrentWeek ? "none" : "block"}>
+                      <Button
+                        size="xs"
+                        colorScheme="red"
+                        onClick={() => onRemoveBet(i)}
+                      >
+                        Remove
+                      </Button>
+                    </Td>
                     <Td textAlign="center">
                       {bet.type === "totals" ? (
                         <>

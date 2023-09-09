@@ -35,10 +35,13 @@ const CustomCheckbox = ({
   useEffect(() => {
     const now = new Date();
     const saturdayTime = new Date();
-    saturdayTime.setUTCHours(16, 0, 0); // 11am CDT is 16:00 UTC
+    saturdayTime.setUTCHours(16, 0, 0); // 11 am CDT is 16:00 UTC
     saturdayTime.setDate(saturdayTime.getDate() + (6 - saturdayTime.getDay())); // Find the next Saturday
 
-    if (now >= saturdayTime) {
+    const twentyFourHoursLater = new Date(saturdayTime);
+    twentyFourHoursLater.setHours(twentyFourHoursLater.getHours() + 24);
+
+    if (now >= saturdayTime && now < twentyFourHoursLater) {
       setIsDisabled(true);
     } else {
       setIsDisabled(false);
