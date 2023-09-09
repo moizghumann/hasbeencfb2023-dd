@@ -30,8 +30,6 @@ export default function Register() {
         email: data.email,
       });
 
-      console.log("user siginin", user.user.uid);
-
       navigate("/");
 
       setIsLoading(false);

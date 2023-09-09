@@ -18,7 +18,6 @@ export default function Guarded(props: GuardedRouteProps) {
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
-        console.log("user is logged out");
       }
     });
 
@@ -26,8 +25,6 @@ export default function Guarded(props: GuardedRouteProps) {
       return unsubscribe();
     };
   }, []);
-
-  console.log(isLoggedIn);
 
   return isLoggedIn !== undefined && isLoggedIn === true ? (
     <div id="GChildren">{children}</div>

@@ -8,12 +8,11 @@ import {
   Thead,
   Tr,
   Text,
-  Button,
   Td,
   VStack,
 } from "@chakra-ui/react";
-import { auth, db } from "../../firebase";
-import { collection, doc, getDoc, onSnapshot } from "firebase/firestore";
+import { db } from "../../firebase";
+import { collection, onSnapshot } from "firebase/firestore";
 import { findCurrentTotats } from "./utls";
 
 export default function AllBets({ bets, allUsers }: any) {

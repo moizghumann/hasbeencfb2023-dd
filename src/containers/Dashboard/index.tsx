@@ -15,7 +15,6 @@ import {
   Button,
   useDisclosure,
 } from "@chakra-ui/react";
-import { IMatchObject } from "../../components/Dashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../slices/store";
 import { setBets as setRBets } from "../../slices/app";
@@ -24,7 +23,6 @@ import { db } from "../../firebase";
 import ConfirmModal from "./ConfirmModal";
 import AllBets from "./AllBets";
 import { findCurrentTotats, findCurrentSpreads } from "./utls";
-import { unsubscribe } from "diagnostics_channel";
 
 export default function Dashboard() {
   const { isOpen, onClose, onOpen } = useDisclosure();

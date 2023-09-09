@@ -69,7 +69,6 @@ function App() {
       if (currentUser) {
         const q = doc(db, "bets", currentUser.uid);
         unsubscribe = onSnapshot(q, (querySnapshot) => {
-          console.log(querySnapshot.data());
           dispatch(setBets(querySnapshot.data()));
         });
       }
