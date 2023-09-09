@@ -103,6 +103,10 @@ export default function AllBets({ bets, allUsers }: any) {
                               Bet No. {i + 1}{" "}
                             </Text>{" "}
                             Team: {guess.team}
+                            <Text fontWeight={500} as="span">
+                              {" "}
+                              {guess.status}
+                            </Text>{" "}
                           </Text>
                           <br />
                         </>
@@ -135,7 +139,11 @@ export default function AllBets({ bets, allUsers }: any) {
                                     .away_team
                                 : null}
                             </Box>
-                          </VStack>
+                          </VStack>{" "}
+                          <Text fontWeight={500} as="span">
+                            {" "}
+                            {guess.status}
+                          </Text>{" "}
                         </>
                       )}
                     </>
