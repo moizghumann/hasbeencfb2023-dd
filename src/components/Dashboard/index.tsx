@@ -49,7 +49,13 @@ const CustomCheckbox = ({
     <Box
       w="35px"
       h="35px"
-      bg={isSelected ? "#011627" : disabled || limitExceed ? "#d9d9d9" : ""}
+      bg={
+        isSelected
+          ? "#011627"
+          : isDisabled || disabled || limitExceed
+          ? "#d9d9d9"
+          : ""
+      }
       border={
         isDisabled || disabled || limitExceed
           ? "2px solid #d9d9d9"
@@ -59,7 +65,9 @@ const CustomCheckbox = ({
       cursor="pointer"
       display="grid"
       placeContent="center"
-      pointerEvents={(disabled || limitExceed) && !isSelected ? "none" : "all"}
+      pointerEvents={
+        (isDisabled || disabled || limitExceed) && !isSelected ? "none" : "all"
+      }
       {...otherProps}
     >
       {isSelected ? <BsCheckLg color="#FF9F1C" size="30px" /> : null}
