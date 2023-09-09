@@ -80,9 +80,9 @@ export default function AllBets({ bets, allUsers }: any) {
               <Th fontSize="base" textAlign="center">
                 Name
               </Th>
-              <Th fontSize="base" textAlign="center">
+              {/* <Th fontSize="base" textAlign="center">
                 Email
-              </Th>
+              </Th> */}
               <Th fontSize="base" textAlign="center">
                 Guesses
               </Th>
@@ -92,7 +92,7 @@ export default function AllBets({ bets, allUsers }: any) {
             {allBets.map((bet) => (
               <Tr bgColor="#F3F4F7">
                 <Td textAlign="center">{allUsers[bet.id]?.name}</Td>
-                <Td textAlign="center">{allUsers[bet.id]?.email}</Td>
+                {/* <Td textAlign="center">{allUsers[bet.id]?.email}</Td> */}
                 <Td textAlign="center">
                   {bet.guesses.map((guess: any, i: number) => (
                     <>
