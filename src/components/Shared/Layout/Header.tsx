@@ -45,7 +45,7 @@ const Header = () => {
             Matches
           </Text>
           <HStack spacing={3} alignItems="center">
-            {currentUser && currentUser.points !== undefined ? (
+            {currentUser ? (
               <Box pos="relative">
                 <AiFillFire size="25px" />
                 <Text
@@ -60,7 +60,7 @@ const Header = () => {
                   display="grid"
                   placeContent="center"
                 >
-                  {currentUser.points}
+                  {currentUser.points ? currentUser.points : 0}
                 </Text>
               </Box>
             ) : null}
