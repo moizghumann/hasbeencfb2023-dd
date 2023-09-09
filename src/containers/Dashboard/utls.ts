@@ -6,7 +6,7 @@ export const findCurrentSpreads = (team?: string, data?: IMatchObject[]) => {
       return _team.away_team === team || _team.home_team === team;
     });
 
-    const spreads = currentMatch?.bookmakers[0].markets[0]?.outcomes.find(
+    const spreads = currentMatch?.bookmakers[0]?.markets[0]?.outcomes.find(
       (__team) => __team.name === team
     );
 
@@ -23,7 +23,7 @@ export const findCurrentTotats = (id: string, data: IMatchObject[]) => {
     return _team.id === id;
   });
 
-  const totals = currentMatch?.bookmakers[0].markets[1]?.outcomes[0].point;
+  const totals = currentMatch?.bookmakers[0]?.markets[1]?.outcomes[0].point;
 
   return {
     totals,
