@@ -91,8 +91,8 @@ export default function AllBets({ bets, allUsers }: any) {
           <Tbody>
             {allBets.map((bet) => (
               <Tr bgColor="#F3F4F7">
-                <Td textAlign="center">{allUsers[bet.id].name}</Td>
-                <Td textAlign="center">{allUsers[bet.id].email}</Td>
+                <Td textAlign="center">{allUsers[bet.id]?.name}</Td>
+                <Td textAlign="center">{allUsers[bet.id]?.email}</Td>
                 <Td textAlign="center">
                   {bet.guesses.map((guess: any, i: number) => (
                     <>

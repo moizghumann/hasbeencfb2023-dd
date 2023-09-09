@@ -323,11 +323,11 @@ export default function Dashboard() {
                     return (
                       <Tr bgColor="#F3F4F7">
                         <Td key={key} textAlign="center">
-                          {allUsers[key].email}
+                          {allUsers[key]?.email}
                         </Td>
                         <Td key={key} textAlign="center">
-                          {allUsers[key].points !== undefined
-                            ? allUsers[key].points
+                          {allUsers[key]?.points !== undefined
+                            ? allUsers[key]?.points
                             : 0}
                         </Td>
                       </Tr>
