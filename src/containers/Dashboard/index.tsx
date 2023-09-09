@@ -85,8 +85,10 @@ export default function Dashboard() {
     // TODO: need check if this bet is resovled or not
     if (currentUser) {
       const betsWeeks = Object.keys(RBets);
+      console.log(betsWeeks);
       if (betsWeeks.length > 0) {
-        const key = betsWeeks[betsWeeks.length - 1];
+        // lastest week bets
+        const key = betsWeeks[0];
 
         const weekNumber = key.split("-")[1];
         if (
