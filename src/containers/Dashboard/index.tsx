@@ -33,9 +33,13 @@ export default function Dashboard() {
   const dispatch = useDispatch();
   const { data, isLoading: getDataLoading } = useGetSportsData();
 
-  const [allUsers, setAllUsers] = useState<{
-    [key: string]: { name: string; email: string; points?: number };
+  const [allUsersMap, setAllUsersMap] = useState<{
+    [key: string]: { id: string; name: string; email: string; points: number };
   }>({});
+
+  const [allUsers, setAllUsers] = useState<
+    { id: string; name: string; email: string; points: number }[]
+  >([]);
 
   const [bets, setBets] = useState<
     {
@@ -167,17 +171,34 @@ export default function Dashboard() {
       const usersQuery = collection(db, "users");
       unsubscribeUsers = onSnapshot(usersQuery, (querySnapshot) => {
         const uidsNameMap: {
-          [key: string]: { name: string; email: string; points?: number };
-        } = {};
-        querySnapshot.docs.forEach((doc) => {
-          uidsNameMap[doc.id] = {
-            name: doc.data().name,
-            email: doc.data().email,
-            points: doc.data().points,
+          [key: string]: {
+            id: string;
+            name: string;
+            email: string;
+            points: number;
           };
-        });
+        } = {};
+        const _allUsers = querySnapshot.docs
+          .map((doc) => {
+            uidsNameMap[doc.id] = {
+              id: doc.id,
+              name: doc.data().name,
+              email: doc.data().email,
+              points: doc.data().points !== undefined ? doc.data().points : 0,
+            };
 
-        setAllUsers(uidsNameMap);
+            return {
+              id: doc.id,
+              name: doc.data().name,
+              email: doc.data().email,
+              points: doc.data().points !== undefined ? doc.data().points : 0,
+            };
+          })
+          .sort((a, b) => b.points - a.points);
+
+        setAllUsers(_allUsers);
+
+        setAllUsersMap(uidsNameMap);
       });
     } catch (error) {
       console.log(error);
@@ -198,7 +219,7 @@ export default function Dashboard() {
         onConfirm={onBetsSubmit}
         isLoading={isLoading}
       />
-      <AllBets bets={data?.data} allUsers={allUsers} />
+      <AllBets bets={data?.data} allUsers={allUsersMap} />
       <Stack direction={{ base: "column", md: "row" }} spacing="5">
         <Box w="full" maxW="500px" bg="white" p="5" rounded="lg">
           <Box>
@@ -319,16 +340,14 @@ export default function Dashboard() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {Object.keys(allUsers).map((key) => {
+                  {allUsers.map((user) => {
                     return (
                       <Tr bgColor="#F3F4F7">
-                        <Td key={key} textAlign="center">
-                          {allUsers[key]?.email}
+                        <Td key={user.id} textAlign="center">
+                          {user?.email}
                         </Td>
-                        <Td key={key} textAlign="center">
-                          {allUsers[key]?.points !== undefined
-                            ? allUsers[key]?.points
-                            : 0}
+                        <Td textAlign="center">
+                          {user?.points !== undefined ? user?.points : 0}
                         </Td>
                       </Tr>
                     );
