@@ -91,7 +91,7 @@ export default function Dashboard() {
         const weekNumber = key.split("-")[1];
         if (
           !RBets["week-" + weekNumber].every(
-            (bet) => bet.status === "completed"
+            (bet) => bet.status !== "in-progress"
           )
         ) {
           setBets(RBets["week-" + weekNumber]);
@@ -100,7 +100,7 @@ export default function Dashboard() {
         if (
           RBets["week-" + weekNumber].length === 3 &&
           !RBets["week-" + weekNumber].every(
-            (bet) => bet.status === "completed"
+            (bet) => bet.status !== "in-progress"
           )
         ) {
           setIsSubmittedForCurrentWeek(true);

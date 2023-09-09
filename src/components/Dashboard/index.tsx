@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Box,
   Text,
@@ -29,13 +30,30 @@ const CustomCheckbox = ({
   limitExceed,
   ...otherProps
 }: CustomCheckbox) => {
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  useEffect(() => {
+    const now = new Date();
+    const saturdayTime = new Date();
+    saturdayTime.setUTCHours(16, 0, 0); // 11am CDT is 16:00 UTC
+    saturdayTime.setDate(saturdayTime.getDate() + (6 - saturdayTime.getDay())); // Find the next Saturday
+
+    if (now >= saturdayTime) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, []);
+
   return (
     <Box
       w="35px"
       h="35px"
       bg={isSelected ? "#011627" : disabled || limitExceed ? "#d9d9d9" : ""}
       border={
-        disabled || limitExceed ? "2px solid #d9d9d9" : "2px solid #011627"
+        isDisabled || disabled || limitExceed
+          ? "2px solid #d9d9d9"
+          : "2px solid #011627"
       }
       rounded="lg"
       cursor="pointer"
@@ -145,300 +163,304 @@ export default function CDashboard(props: CDashboardProps) {
                 <Tbody>
                   {data
                     ? data.map((sport) => {
-                      if (
-                        moment(sport.commence_time).format("dddd") !==
-                        "Saturday"
-                      ) {
-                        return null;
-                      }
+                        if (
+                          moment(sport.commence_time).format("dddd") !==
+                          "Saturday"
+                        ) {
+                          return null;
+                        }
 
-                      return (
-                        <Tr key={sport.id} bgColor="#F3F4F7">
-                          <Td
-                            textAlign="center"
-                            fontSize="base"
-                            lineHeight="8"
-                          >
-                            <Text width={'90%'} whiteSpace={'normal'} opacity={'65%'}>
-                              {moment(sport.commence_time).format(
-                                "DD/MM/YYYY dddd MMM HH:mm A"
-                              )}
-                            </Text>
-                          </Td>
-                          <Td>
-                            <VStack align="center">
-                              <HStack>
-                                {/* <Image src={team1Src} width={"20px"} /> */}
-                                <Text opacity={'70%'} fontWeight={'medium'}>
-                                  {
-                                    sport.bookmakers[0]?.markets[0]
-                                      .outcomes[0].name
-                                  }
-                                </Text>
-                              </HStack>
-                              <Text opacity={'70%'}>vs</Text>
-                              <HStack>
-                                {/* <Image src={team2Src} width={"20px"} /> */}
-                                <Text opacity={'70%'} fontWeight={'medium'}>
-                                  {
-                                    sport.bookmakers[0]?.markets[0]
-                                      .outcomes[1].name
-                                  }
-                                </Text>
-                              </HStack>
-                            </VStack>
-                          </Td>
-
-                          {/* ---------------------- */}
-                          <Td>
-                            <HStack justifyContent="center" mb="5">
-                              {sport.bookmakers[0]?.markets[0] ? (
-                                <>
-                                  <Box bgColor="#FF9F1C" p="2" rounded="lg">
+                        return (
+                          <Tr key={sport.id} bgColor="#F3F4F7">
+                            <Td
+                              textAlign="center"
+                              fontSize="base"
+                              lineHeight="8"
+                            >
+                              <Text
+                                width={"90%"}
+                                whiteSpace={"normal"}
+                                opacity={"65%"}
+                              >
+                                {moment(sport.commence_time).format(
+                                  "DD/MM/YYYY dddd MMM HH:mm A"
+                                )}
+                              </Text>
+                            </Td>
+                            <Td>
+                              <VStack align="center">
+                                <HStack>
+                                  {/* <Image src={team1Src} width={"20px"} /> */}
+                                  <Text opacity={"70%"} fontWeight={"medium"}>
                                     {
                                       sport.bookmakers[0]?.markets[0]
-                                        ?.outcomes[0].point
+                                        .outcomes[0].name
                                     }
-                                  </Box>
-                                  <CustomCheckbox
-                                    pointerEvents={
-                                      isSubmittedForCurrentWeek
-                                        ? "none"
-                                        : "all"
-                                    }
-                                    onClick={() => {
-                                      if (
-                                        bets.some((bet) => {
-                                          return (
-                                            bet.team ===
-                                            sport.bookmakers[0]?.markets[0]
-                                              .outcomes[0].name
-                                          );
-                                        })
-                                      ) {
-                                        removeBet(sport.id, "Spread");
-                                      } else {
-                                        onSetBet({
-                                          gameId: sport.id,
-                                          status: "in-progress",
-                                          team: sport.bookmakers[0]
-                                            ?.markets[0].outcomes[0].name,
-                                          type: "Spread",
-                                          spread:
-                                            sport.bookmakers[0]?.markets[0]
-                                              .outcomes[0].point,
-                                        });
-                                      }
-                                    }}
-                                    isSelected={bets.some((bet) => {
-                                      return (
-                                        bet.team ===
-                                        sport.bookmakers[0]?.markets[0]
-                                          .outcomes[0].name
-                                      );
-                                    })}
-                                    disabled={bets.some((bet) => {
-                                      return (
-                                        bet.team ===
-                                        sport.bookmakers[0]?.markets[0]
-                                          .outcomes[1].name
-                                      );
-                                    })}
-                                    limitExceed={bets.length === 3}
-                                  />
-                                </>
-                              ) : null}
-                            </HStack>
-                            <HStack justifyContent="center">
-                              {sport.bookmakers[0]?.markets[0] ? (
-                                <>
-                                  <Box bgColor="#FF9F1C" p="2" rounded="lg">
+                                  </Text>
+                                </HStack>
+                                <Text opacity={"70%"}>vs</Text>
+                                <HStack>
+                                  {/* <Image src={team2Src} width={"20px"} /> */}
+                                  <Text opacity={"70%"} fontWeight={"medium"}>
                                     {
                                       sport.bookmakers[0]?.markets[0]
-                                        ?.outcomes[1].point
+                                        .outcomes[1].name
                                     }
-                                  </Box>
-                                  <CustomCheckbox
-                                    pointerEvents={
-                                      isSubmittedForCurrentWeek
-                                        ? "none"
-                                        : "all"
-                                    }
-                                    onClick={() => {
-                                      if (
-                                        bets.some((bet) => {
-                                          return (
-                                            bet.team ===
-                                            sport.bookmakers[0]?.markets[0]
-                                              .outcomes[1].name
-                                          );
-                                        })
-                                      ) {
-                                        removeBet(sport.id, "spread");
-                                      } else {
-                                        onSetBet({
-                                          gameId: sport.id,
-                                          status: "in-progress",
-                                          team: sport.bookmakers[0]
-                                            ?.markets[0].outcomes[1].name,
-                                          type: "spread",
-                                          spread:
-                                            sport.bookmakers[0]?.markets[0]
-                                              .outcomes[1].point,
-                                        });
-                                      }
-                                    }}
-                                    isSelected={bets.some((bet) => {
-                                      return (
-                                        bet.team ===
-                                        sport.bookmakers[0]?.markets[0]
-                                          .outcomes[1].name
-                                      );
-                                    })}
-                                    disabled={bets.some((bet) => {
-                                      return (
-                                        bet.team ===
-                                        sport.bookmakers[0]?.markets[0]
-                                          .outcomes[0].name
-                                      );
-                                    })}
-                                    limitExceed={bets.length === 3}
-                                  />
-                                </>
-                              ) : null}
-                            </HStack>
-                          </Td>
+                                  </Text>
+                                </HStack>
+                              </VStack>
+                            </Td>
 
-                          {/* ----------------------------- */}
-                          <Td>
-                            <HStack justifyContent="center" mb="4">
-                              {sport.bookmakers[0]?.markets[1] ? (
-                                <>
-                                  <Box bgColor="#FF9F1C" p="2" rounded="lg">
-                                    {
-                                      sport.bookmakers[0]?.markets[1]
-                                        ?.outcomes[0].point
-                                    }
-                                  </Box>
-                                  <CustomCheckbox
-                                    pointerEvents={
-                                      isSubmittedForCurrentWeek
-                                        ? "none"
-                                        : "all"
-                                    }
-                                    onClick={() => {
-                                      if (
-                                        bets.some((bet) => {
-                                          return (
-                                            bet.gameId === sport.id &&
-                                            bet.totals ===
+                            {/* ---------------------- */}
+                            <Td>
+                              <HStack justifyContent="center" mb="5">
+                                {sport.bookmakers[0]?.markets[0] ? (
+                                  <>
+                                    <Box bgColor="#FF9F1C" p="2" rounded="lg">
+                                      {
+                                        sport.bookmakers[0]?.markets[0]
+                                          ?.outcomes[0].point
+                                      }
+                                    </Box>
+                                    <CustomCheckbox
+                                      pointerEvents={
+                                        isSubmittedForCurrentWeek
+                                          ? "none"
+                                          : "all"
+                                      }
+                                      onClick={() => {
+                                        if (
+                                          bets.some((bet) => {
+                                            return (
+                                              bet.team ===
+                                              sport.bookmakers[0]?.markets[0]
+                                                .outcomes[0].name
+                                            );
+                                          })
+                                        ) {
+                                          removeBet(sport.id, "Spread");
+                                        } else {
+                                          onSetBet({
+                                            gameId: sport.id,
+                                            status: "in-progress",
+                                            team: sport.bookmakers[0]
+                                              ?.markets[0].outcomes[0].name,
+                                            type: "Spread",
+                                            spread:
+                                              sport.bookmakers[0]?.markets[0]
+                                                .outcomes[0].point,
+                                          });
+                                        }
+                                      }}
+                                      isSelected={bets.some((bet) => {
+                                        return (
+                                          bet.team ===
+                                          sport.bookmakers[0]?.markets[0]
+                                            .outcomes[0].name
+                                        );
+                                      })}
+                                      disabled={bets.some((bet) => {
+                                        return (
+                                          bet.team ===
+                                          sport.bookmakers[0]?.markets[0]
+                                            .outcomes[1].name
+                                        );
+                                      })}
+                                      limitExceed={bets.length === 3}
+                                    />
+                                  </>
+                                ) : null}
+                              </HStack>
+                              <HStack justifyContent="center">
+                                {sport.bookmakers[0]?.markets[0] ? (
+                                  <>
+                                    <Box bgColor="#FF9F1C" p="2" rounded="lg">
+                                      {
+                                        sport.bookmakers[0]?.markets[0]
+                                          ?.outcomes[1].point
+                                      }
+                                    </Box>
+                                    <CustomCheckbox
+                                      pointerEvents={
+                                        isSubmittedForCurrentWeek
+                                          ? "none"
+                                          : "all"
+                                      }
+                                      onClick={() => {
+                                        if (
+                                          bets.some((bet) => {
+                                            return (
+                                              bet.team ===
+                                              sport.bookmakers[0]?.markets[0]
+                                                .outcomes[1].name
+                                            );
+                                          })
+                                        ) {
+                                          removeBet(sport.id, "spread");
+                                        } else {
+                                          onSetBet({
+                                            gameId: sport.id,
+                                            status: "in-progress",
+                                            team: sport.bookmakers[0]
+                                              ?.markets[0].outcomes[1].name,
+                                            type: "spread",
+                                            spread:
+                                              sport.bookmakers[0]?.markets[0]
+                                                .outcomes[1].point,
+                                          });
+                                        }
+                                      }}
+                                      isSelected={bets.some((bet) => {
+                                        return (
+                                          bet.team ===
+                                          sport.bookmakers[0]?.markets[0]
+                                            .outcomes[1].name
+                                        );
+                                      })}
+                                      disabled={bets.some((bet) => {
+                                        return (
+                                          bet.team ===
+                                          sport.bookmakers[0]?.markets[0]
+                                            .outcomes[0].name
+                                        );
+                                      })}
+                                      limitExceed={bets.length === 3}
+                                    />
+                                  </>
+                                ) : null}
+                              </HStack>
+                            </Td>
+
+                            {/* ----------------------------- */}
+                            <Td>
+                              <HStack justifyContent="center" mb="4">
+                                {sport.bookmakers[0]?.markets[1] ? (
+                                  <>
+                                    <Box bgColor="#FF9F1C" p="2" rounded="lg">
+                                      {
+                                        sport.bookmakers[0]?.markets[1]
+                                          ?.outcomes[0].point
+                                      }
+                                    </Box>
+                                    <CustomCheckbox
+                                      pointerEvents={
+                                        isSubmittedForCurrentWeek
+                                          ? "none"
+                                          : "all"
+                                      }
+                                      onClick={() => {
+                                        if (
+                                          bets.some((bet) => {
+                                            return (
+                                              bet.gameId === sport.id &&
+                                              bet.totals ===
+                                                sport.bookmakers[0]?.markets[1]
+                                                  ?.outcomes[0].name
+                                            );
+                                          })
+                                        ) {
+                                          removeBet(sport.id, "totals");
+                                        } else {
+                                          onSetBet({
+                                            gameId: sport.id,
+                                            status: "in-progress",
+                                            type: "totals",
+                                            totals:
+                                              sport.bookmakers[0]?.markets[1]
+                                                ?.outcomes[0].name,
+                                            point:
+                                              sport.bookmakers[0]?.markets[1]
+                                                ?.outcomes[0].point,
+                                          });
+                                        }
+                                      }}
+                                      isSelected={bets.some((bet) => {
+                                        return (
+                                          bet.gameId === sport.id &&
+                                          bet.totals ===
                                             sport.bookmakers[0]?.markets[1]
                                               ?.outcomes[0].name
-                                          );
-                                        })
-                                      ) {
-                                        removeBet(sport.id, "totals");
-                                      } else {
-                                        onSetBet({
-                                          gameId: sport.id,
-                                          status: "in-progress",
-                                          type: "totals",
-                                          totals:
-                                            sport.bookmakers[0]?.markets[1]
-                                              ?.outcomes[0].name,
-                                          point:
-                                            sport.bookmakers[0]?.markets[1]
-                                              ?.outcomes[0].point,
-                                        });
-                                      }
-                                    }}
-                                    isSelected={bets.some((bet) => {
-                                      return (
-                                        bet.gameId === sport.id &&
-                                        bet.totals ===
-                                        sport.bookmakers[0]?.markets[1]
-                                          ?.outcomes[0].name
-                                      );
-                                    })}
-                                    disabled={bets.some((bet) => {
-                                      return (
-                                        bet.gameId === sport.id &&
-                                        bet.totals ===
-                                        sport.bookmakers[0]?.markets[1]
-                                          ?.outcomes[1].name
-                                      );
-                                    })}
-                                    limitExceed={bets.length === 3}
-                                  />
-                                </>
-                              ) : null}
-                            </HStack>
-                            <HStack justifyContent="center">
-                              {sport.bookmakers[0]?.markets[1] ? (
-                                <>
-                                  <Box bgColor="#FF9F1C" p="2" rounded="lg">
-                                    {
-                                      sport.bookmakers[0]?.markets[1]
-                                        ?.outcomes[1].point
-                                    }
-                                  </Box>
-                                  <CustomCheckbox
-                                    pointerEvents={
-                                      isSubmittedForCurrentWeek
-                                        ? "none"
-                                        : "all"
-                                    }
-                                    onClick={() => {
-                                      if (
-                                        bets.some((bet) => {
-                                          return (
-                                            bet.gameId === sport.id &&
-                                            bet.totals ===
+                                        );
+                                      })}
+                                      disabled={bets.some((bet) => {
+                                        return (
+                                          bet.gameId === sport.id &&
+                                          bet.totals ===
                                             sport.bookmakers[0]?.markets[1]
                                               ?.outcomes[1].name
-                                          );
-                                        })
-                                      ) {
-                                        removeBet(sport.id, "totals");
-                                      } else {
-                                        onSetBet({
-                                          gameId: sport.id,
-                                          status: "in-progress",
-                                          type: "totals",
-                                          totals:
-                                            sport.bookmakers[0]?.markets[1]
-                                              ?.outcomes[1].name,
-                                          point:
-                                            sport.bookmakers[0]?.markets[1]
-                                              ?.outcomes[1].point,
-                                        });
+                                        );
+                                      })}
+                                      limitExceed={bets.length === 3}
+                                    />
+                                  </>
+                                ) : null}
+                              </HStack>
+                              <HStack justifyContent="center">
+                                {sport.bookmakers[0]?.markets[1] ? (
+                                  <>
+                                    <Box bgColor="#FF9F1C" p="2" rounded="lg">
+                                      {
+                                        sport.bookmakers[0]?.markets[1]
+                                          ?.outcomes[1].point
                                       }
-                                    }}
-                                    isSelected={bets.some((bet) => {
-                                      return (
-                                        bet.gameId === sport.id &&
-                                        bet.totals ===
-                                        sport.bookmakers[0]?.markets[1]
-                                          ?.outcomes[1].name
-                                      );
-                                    })}
-                                    disabled={bets.some((bet) => {
-                                      return (
-                                        bet.gameId === sport.id &&
-                                        bet.totals ===
-                                        sport.bookmakers[0]?.markets[1]
-                                          ?.outcomes[0].name
-                                      );
-                                    })}
-                                    limitExceed={bets.length === 3}
-                                  />
-                                </>
-                              ) : null}
-                            </HStack>
-                          </Td>
-                        </Tr>
-                      );
-                    })
+                                    </Box>
+                                    <CustomCheckbox
+                                      pointerEvents={
+                                        isSubmittedForCurrentWeek
+                                          ? "none"
+                                          : "all"
+                                      }
+                                      onClick={() => {
+                                        if (
+                                          bets.some((bet) => {
+                                            return (
+                                              bet.gameId === sport.id &&
+                                              bet.totals ===
+                                                sport.bookmakers[0]?.markets[1]
+                                                  ?.outcomes[1].name
+                                            );
+                                          })
+                                        ) {
+                                          removeBet(sport.id, "totals");
+                                        } else {
+                                          onSetBet({
+                                            gameId: sport.id,
+                                            status: "in-progress",
+                                            type: "totals",
+                                            totals:
+                                              sport.bookmakers[0]?.markets[1]
+                                                ?.outcomes[1].name,
+                                            point:
+                                              sport.bookmakers[0]?.markets[1]
+                                                ?.outcomes[1].point,
+                                          });
+                                        }
+                                      }}
+                                      isSelected={bets.some((bet) => {
+                                        return (
+                                          bet.gameId === sport.id &&
+                                          bet.totals ===
+                                            sport.bookmakers[0]?.markets[1]
+                                              ?.outcomes[1].name
+                                        );
+                                      })}
+                                      disabled={bets.some((bet) => {
+                                        return (
+                                          bet.gameId === sport.id &&
+                                          bet.totals ===
+                                            sport.bookmakers[0]?.markets[1]
+                                              ?.outcomes[0].name
+                                        );
+                                      })}
+                                      limitExceed={bets.length === 3}
+                                    />
+                                  </>
+                                ) : null}
+                              </HStack>
+                            </Td>
+                          </Tr>
+                        );
+                      })
                     : null}
                 </Tbody>
               </Table>
@@ -451,7 +473,7 @@ export default function CDashboard(props: CDashboardProps) {
             </Box>
           ) : null}
         </Box>
-      </Stack >
-    </Box >
+      </Stack>
+    </Box>
   );
 }

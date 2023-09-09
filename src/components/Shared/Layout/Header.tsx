@@ -1,4 +1,4 @@
-import { chakra, Flex, HStack, Text } from "@chakra-ui/react";
+import { chakra, Flex, HStack, Text, Box } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -8,6 +8,7 @@ import Profile from "./ProfileMenu";
 import { Link } from "react-router-dom";
 import { RootState } from "../../../slices/store";
 import { setCurrentUser } from "../../../slices/app";
+import { AiFillFire } from "react-icons/ai";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -44,23 +45,25 @@ const Header = () => {
             Matches
           </Text>
           <HStack spacing={3} alignItems="center">
-            {/* <Box pos="relative">
-              <IoNotificationsOutline size="25px" />
-              <Text
-                pos="absolute"
-                top="-8px"
-                right="-8px"
-                bg="#FF9F1C"
-                w="20px"
-                h="20px"
-                fontSize="sm"
-                rounded="full"
-                display="grid"
-                placeContent="center"
-              >
-                0
-              </Text>
-            </Box> */}
+            {currentUser && currentUser.points !== undefined ? (
+              <Box pos="relative">
+                <AiFillFire size="25px" />
+                <Text
+                  pos="absolute"
+                  top="-8px"
+                  right="-8px"
+                  bg="#FF9F1C"
+                  w="20px"
+                  h="20px"
+                  fontSize="sm"
+                  rounded="full"
+                  display="grid"
+                  placeContent="center"
+                >
+                  {currentUser.points}
+                </Text>
+              </Box>
+            ) : null}
             <Profile onLogout={onLogout} currentUser={currentUser} />
           </HStack>
         </Flex>
