@@ -203,7 +203,7 @@ export default function Dashboard() {
         <Box w="full" maxW="500px" bg="white" p="5" rounded="lg">
           <Box>
             <Text fontSize="3xl" fontWeight={700} mb="2">
-              YourCurrent Bets
+              Your Current Bets
             </Text>
             <TableContainer w="full">
               <Table
