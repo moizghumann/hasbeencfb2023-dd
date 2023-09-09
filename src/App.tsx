@@ -66,12 +66,16 @@ function App() {
 
   useEffect(() => {
     let unsubscribe: any = null;
-    if (currentUser) {
-      const q = doc(db, "bets", currentUser.uid);
-      unsubscribe = onSnapshot(q, (querySnapshot) => {
-        console.log(querySnapshot.data());
-        dispatch(setBets(querySnapshot.data()));
-      });
+    try {
+      if (currentUser) {
+        const q = doc(db, "bets", currentUser.uid);
+        unsubscribe = onSnapshot(q, (querySnapshot) => {
+          console.log(querySnapshot.data());
+          dispatch(setBets(querySnapshot.data()));
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
 
     () => {
