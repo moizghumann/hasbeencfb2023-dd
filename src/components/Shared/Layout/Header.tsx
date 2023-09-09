@@ -7,7 +7,7 @@ import { auth } from "../../../firebase";
 import Profile from "./ProfileMenu";
 import { Link } from "react-router-dom";
 import { RootState } from "../../../slices/store";
-import { setCurrentUser } from "../../../slices/app";
+import { setBets, setCurrentUser } from "../../../slices/app";
 import { AiFillFire } from "react-icons/ai";
 
 const Header = () => {
@@ -20,6 +20,7 @@ const Header = () => {
   const onLogout = async () => {
     await signOut(auth);
     dispatch(setCurrentUser(null));
+    dispatch(setBets({}));
     navigate("/signin");
   };
 
