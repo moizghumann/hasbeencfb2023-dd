@@ -91,58 +91,17 @@ export default function AllBets({ bets, allUsers }: any) {
             href={`mailto:${Object.values(allUsers).map((user: any) => {
               return user.email;
             })}&subject=This%20%Week's%20%Bets&Body=${allBets.map((bet) =>
-              bet.guesses.map((guess: any, i: number) => (
-                <>
-                  {guess.type === "Spread" ? (
-                    <>
-                      <Text>
-                        <Text fontWeight={500} as="span">
-                          Bet No. {i + 1}{" "}
-                        </Text>{" "}
-                        Team: {guess.team}
-                        <Text fontWeight={500} as="span">
-                          {" "}
-                          {guess.status}
-                        </Text>{" "}
-                      </Text>
-                      <br />
-                    </>
-                  ) : (
-                    <>
-                      <Text as="span" fontWeight={500}>
-                        Bet No. {i + 1}
-                      </Text>
-                      <VStack
-                        display="inline-flex"
-                        justifyContent="center"
-                        mb="5"
-                      >
-                        {/* <Text>Totals</Text> */}
-                        <Text>
-                          {guess.totals} {guess.point}
-                        </Text>
-                        <Box>
-                          {bets
-                            ? // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                              findCurrentTotats(guess.gameId, bets).home_team
-                            : null}
-                          <br />
-                          vs
-                          <br />
-                          {bets
-                            ? // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                              findCurrentTotats(guess.gameId, bets).away_team
-                            : null}
-                        </Box>
-                      </VStack>{" "}
-                      <Text fontWeight={500} as="span">
-                        {" "}
-                        {guess.status}
-                      </Text>{" "}
-                    </>
-                  )}
-                </>
-              ))
+              bet.guesses.map(
+                (guess: any, i: number) =>
+                  `
+                  Guess Type: ${guess.type}
+                  Guess Status: ${guess.status}
+                  Guess Team: ${guess.team}
+
+
+                  
+                  `
+              )
             )}`}
           >
             Send Email To All
