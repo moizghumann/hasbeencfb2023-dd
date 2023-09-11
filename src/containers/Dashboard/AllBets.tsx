@@ -98,12 +98,9 @@ export default function AllBets({ bets, allUsers }: any) {
                   bet.guesses
                     .map(
                       (guess: any) =>
-                        `User Email: ${allUsers[bet.id]?.email}
-                  Guess Type: ${guess.type}
-                  Guess Status: ${guess.status}
-                  Guess Team: ${guess.team}
-                  
-                  `
+                        `User Email: ${allUsers[bet.id]?.email} Type: ${
+                          guess.type
+                        } Status: ${guess.status} Team: ${guess.team}`
                     )
                     .join("\n")
                 )
