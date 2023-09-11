@@ -92,14 +92,14 @@ export default function AllBets({ bets, allUsers }: any) {
               return user.email;
             })}&subject=This%20%Week's%20%Bets&Body=${allBets.map((bet) =>
               bet.guesses.map(
-                (guess: any, i: number) =>
+                (guess: any) =>
                   `
                   Guess Type: ${guess.type}
                   Guess Status: ${guess.status}
                   Guess Team: ${guess.team}
 
 
-                  
+
                   `
               )
             )}`}
