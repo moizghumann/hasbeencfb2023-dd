@@ -90,7 +90,7 @@ export default function AllBets({ bets, allUsers }: any) {
             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-argument
             href={`mailto:${Object.values(allUsers).map((user: any) => {
               return user.email;
-            })}&subject=This%20%Week's%20%Bets&Body=${allBets.map((bet) =>
+            })}&subject=This%20%Week's%20%Bets&body=${allBets.map((bet) =>
               bet.guesses.map(
                 (guess: any) =>
                   `
