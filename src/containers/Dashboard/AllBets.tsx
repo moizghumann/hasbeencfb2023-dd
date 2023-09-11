@@ -82,18 +82,19 @@ export default function AllBets({ bets, allUsers }: any) {
         <Text fontSize="3xl" fontWeight={700} mb="2">
           All Bets
         </Text>
-
-        <Button
-          as="a"
-          variant="solid"
-          colorScheme="orange"
-          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-argument
-          href={`mailto:${Object.values(allUsers).map((user: any) => {
-            return user.email;
-          })}`}
-        >
-          Send Email To All
-        </Button>
+        {currentUser?.role === "admin" ? (
+          <Button
+            as="a"
+            variant="solid"
+            colorScheme="orange"
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-argument
+            href={`mailto:${Object.values(allUsers).map((user: any) => {
+              return user.email;
+            })}&subject=This%20%Week's%20%Bets&Body=Please%20%type%20%your%20%message%20%here`}
+          >
+            Send Email To All
+          </Button>
+        ) : null}
       </HStack>
       <TableContainer w="full">
         <Table
