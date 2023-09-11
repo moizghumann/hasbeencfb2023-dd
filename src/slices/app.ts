@@ -5,6 +5,7 @@ interface ICurrentUser {
   email: string;
   name: string;
   points?: number;
+  role?: string;
   // currentGuesses: {
   //   team: string;
   // }[];

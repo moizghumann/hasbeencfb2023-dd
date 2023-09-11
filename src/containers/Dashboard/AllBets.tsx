@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import {
   Box,
   Table,
@@ -10,28 +12,38 @@ import {
   Text,
   Td,
   VStack,
+  Button,
+  HStack,
 } from "@chakra-ui/react";
 import { db } from "../../firebase";
 import { collection, onSnapshot } from "firebase/firestore";
 import { findCurrentTotats } from "./utls";
+import { RootState } from "../../slices/store";
 
 export default function AllBets({ bets, allUsers }: any) {
   const [allBets, setAllBets] = useState<{ id: string; guesses: any }[]>([]);
   const [show, setShow] = useState(false);
+  const { currentUser } = useSelector((state: RootState) => state.app);
 
   useEffect(() => {
-    const now = new Date();
-    const saturdayTime = new Date();
-    saturdayTime.setUTCHours(16, 0, 0); // 11 am CDT is 16:00 UTC
-    saturdayTime.setDate(saturdayTime.getDate() + (6 - saturdayTime.getDay())); // Find the next Saturday
-
-    const twentyFourHoursLater = new Date(saturdayTime);
-    twentyFourHoursLater.setHours(twentyFourHoursLater.getHours() + 24);
-
-    if (now >= saturdayTime && now < twentyFourHoursLater) {
+    if (currentUser?.role === "admin") {
       setShow(true);
     } else {
-      setShow(false);
+      const now = new Date();
+      const saturdayTime = new Date();
+      saturdayTime.setUTCHours(16, 0, 0); // 11 am CDT is 16:00 UTC
+      saturdayTime.setDate(
+        saturdayTime.getDate() + (6 - saturdayTime.getDay())
+      ); // Find the next Saturday
+
+      const twentyFourHoursLater = new Date(saturdayTime);
+      twentyFourHoursLater.setHours(twentyFourHoursLater.getHours() + 24);
+
+      if (now >= saturdayTime && now < twentyFourHoursLater) {
+        setShow(true);
+      } else {
+        setShow(false);
+      }
     }
 
     let unsubscribe: any = null;
@@ -62,13 +74,27 @@ export default function AllBets({ bets, allUsers }: any) {
         return unsubscribe();
       }
     };
-  }, []);
+  }, [currentUser]);
 
   return show ? (
     <Box w="full" maxW="full" mb="5" bg="white" p="5" rounded="lg">
-      <Text fontSize="3xl" fontWeight={700} mb="2">
-        All Bets
-      </Text>
+      <HStack justifyContent="space-between">
+        <Text fontSize="3xl" fontWeight={700} mb="2">
+          All Bets
+        </Text>
+
+        <Button
+          as="a"
+          variant="solid"
+          colorScheme="orange"
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-argument
+          href={`mailto:${Object.values(allUsers).map((user: any) => {
+            return user.email;
+          })}`}
+        >
+          Send Email To All
+        </Button>
+      </HStack>
       <TableContainer w="full">
         <Table
           variant="unstyled"
@@ -80,19 +106,20 @@ export default function AllBets({ bets, allUsers }: any) {
               <Th fontSize="base" textAlign="center">
                 Name
               </Th>
-              {/* <Th fontSize="base" textAlign="center">
+              <Th fontSize="base" textAlign="center">
                 Email
-              </Th> */}
+              </Th>
               <Th fontSize="base" textAlign="center">
                 Guesses
               </Th>
+              {currentUser?.role === "admin" ? <Th>Action</Th> : null}
             </Tr>
           </Thead>
           <Tbody>
             {allBets.map((bet) => (
               <Tr bgColor="#F3F4F7">
                 <Td textAlign="center">{allUsers[bet.id]?.name}</Td>
-                {/* <Td textAlign="center">{allUsers[bet.id]?.email}</Td> */}
+                <Td textAlign="center">{allUsers[bet.id]?.email}</Td>
                 <Td textAlign="center">
                   {bet.guesses.map((guess: any, i: number) => (
                     <>
@@ -149,6 +176,27 @@ export default function AllBets({ bets, allUsers }: any) {
                     </>
                   ))}
                 </Td>
+                {currentUser?.role === "admin" ? (
+                  <Td>
+                    <Button
+                      as="a"
+                      variant="solid"
+                      colorScheme="orange"
+                      //eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+                      href={`mailto:${allUsers[bet.id]?.email}?subject=${
+                        //eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+                        allUsers[bet.id]?.name
+                      }%20%Bets%20%this%20%&body=${`
+                      ${bet.guesses.map((game: any, i: number) => {
+                        return `game ${i + 1}: ${game.status}`;
+                      })}
+                      `}`}
+                      size="sm"
+                    >
+                      Send Email
+                    </Button>
+                  </Td>
+                ) : null}
               </Tr>
             ))}
           </Tbody>
