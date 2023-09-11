@@ -87,22 +87,27 @@ export default function AllBets({ bets, allUsers }: any) {
             as="a"
             variant="solid"
             colorScheme="orange"
-            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-argument
-            href={`mailto:${Object.values(allUsers).map((user: any) => {
-              return user.email;
-            })}&subject=This%20%Week's%20%Bets&body=${allBets.map((bet) =>
-              bet.guesses.map(
-                (guess: any) =>
-                  `
-                  User Email: ${allUsers[bet.id]?.email}
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+            href={`mailto:${Object.values(allUsers)
+              .map((user: any) => user.email)
+              .join(",")}?subject=${encodeURIComponent(
+              "This Week's Bets"
+            )}&body=${encodeURIComponent(
+              allBets
+                .map((bet) =>
+                  bet.guesses
+                    .map(
+                      (guess: any) =>
+                        `User Email: ${allUsers[bet.id]?.email}
                   Guess Type: ${guess.type}
                   Guess Status: ${guess.status}
                   Guess Team: ${guess.team}
-
-
-
+                  
                   `
-              )
+                    )
+                    .join("\n")
+                )
+                .join("\n")
             )}`}
           >
             Send Email To All
