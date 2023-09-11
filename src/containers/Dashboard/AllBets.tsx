@@ -90,7 +90,89 @@ export default function AllBets({ bets, allUsers }: any) {
             // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-argument
             href={`mailto:${Object.values(allUsers).map((user: any) => {
               return user.email;
-            })}&subject=This%20%Week's%20%Bets&Body=Please%20%type%20%your%20%message%20%here`}
+            })}&subject=This%20%Week's%20%Bets&Body=${allBets.map((bet) => (
+              <Tr bgColor="#F3F4F7">
+                <Td textAlign="center">{allUsers[bet.id]?.name}</Td>
+                <Td textAlign="center">{allUsers[bet.id]?.email}</Td>
+                <Td textAlign="center">
+                  {bet.guesses.map((guess: any, i: number) => (
+                    <>
+                      {guess.type === "Spread" ? (
+                        <>
+                          <Text>
+                            <Text fontWeight={500} as="span">
+                              Bet No. {i + 1}{" "}
+                            </Text>{" "}
+                            Team: {guess.team}
+                            <Text fontWeight={500} as="span">
+                              {" "}
+                              {guess.status}
+                            </Text>{" "}
+                          </Text>
+                          <br />
+                        </>
+                      ) : (
+                        <>
+                          <Text as="span" fontWeight={500}>
+                            Bet No. {i + 1}
+                          </Text>
+                          <VStack
+                            display="inline-flex"
+                            justifyContent="center"
+                            mb="5"
+                          >
+                            {/* <Text>Totals</Text> */}
+                            <Text>
+                              {guess.totals} {guess.point}
+                            </Text>
+                            <Box>
+                              {bets
+                                ? // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                                  findCurrentTotats(guess.gameId, bets)
+                                    .home_team
+                                : null}
+                              <br />
+                              vs
+                              <br />
+                              {bets
+                                ? // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+                                  findCurrentTotats(guess.gameId, bets)
+                                    .away_team
+                                : null}
+                            </Box>
+                          </VStack>{" "}
+                          <Text fontWeight={500} as="span">
+                            {" "}
+                            {guess.status}
+                          </Text>{" "}
+                        </>
+                      )}
+                    </>
+                  ))}
+                </Td>
+                {currentUser?.role === "admin" ? (
+                  <Td>
+                    <Button
+                      as="a"
+                      variant="solid"
+                      colorScheme="orange"
+                      //eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+                      href={`mailto:${allUsers[bet.id]?.email}?subject=${
+                        //eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+                        allUsers[bet.id]?.name
+                      }%20%Bets%20%this%20%&body=${`
+                      ${bet.guesses.map((game: any, i: number) => {
+                        return `game ${i + 1}: ${game.status}`;
+                      })}
+                      `}`}
+                      size="sm"
+                    >
+                      Send Email
+                    </Button>
+                  </Td>
+                ) : null}
+              </Tr>
+            ))}`}
           >
             Send Email To All
           </Button>
