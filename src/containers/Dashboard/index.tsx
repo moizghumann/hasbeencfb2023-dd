@@ -344,7 +344,7 @@ export default function Dashboard() {
                     return (
                       <Tr bgColor="#F3F4F7">
                         <Td key={user.id} textAlign="center">
-                          {user?.email}
+                          {user?.name}
                         </Td>
                         <Td textAlign="center">
                           {user?.points !== undefined ? user?.points : 0}

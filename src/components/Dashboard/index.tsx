@@ -174,10 +174,16 @@ export default function CDashboard(props: CDashboardProps) {
                 <Tbody>
                   {data
                     ? data.map((sport) => {
-                        if (
-                          moment(sport.commence_time).format("dddd") !==
-                          "Saturday"
-                        ) {
+                        // Get the current date and time
+                        const currentDate = moment();
+
+                        // Check if the given date falls on a Saturday of the current week
+                        const givenDate = moment(sport.commence_time);
+                        const isCurrentWeekSaturday =
+                          givenDate.isoWeekday() === 6 &&
+                          givenDate.isSame(currentDate, "week");
+
+                        if (!isCurrentWeekSaturday) {
                           return null;
                         }
 
