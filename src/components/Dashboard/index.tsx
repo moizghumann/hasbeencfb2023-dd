@@ -208,21 +208,51 @@ export default function CDashboard(props: CDashboardProps) {
                               <VStack align="center">
                                 <HStack>
                                   {/* <Image src={team1Src} width={"20px"} /> */}
-                                  <Text opacity={"70%"} fontWeight={"medium"}>
-                                    {
+                                  <Text
+                                    opacity={"70%"}
+                                    fontWeight={
+                                      sport.home_team ===
                                       sport.bookmakers[0]?.markets[0]
                                         .outcomes[0].name
+                                        ? "bold"
+                                        : "medium"
                                     }
+                                  >
+                                    {sport.away_team ===
+                                    sport.bookmakers[0]?.markets[0].outcomes[0]
+                                      .name
+                                      ? sport.away_team
+                                      : sport.home_team}{" "}
+                                    {sport.home_team ===
+                                    sport.bookmakers[0]?.markets[0].outcomes[0]
+                                      .name
+                                      ? "(H)"
+                                      : "(A)"}
                                   </Text>
                                 </HStack>
                                 <Text opacity={"70%"}>vs</Text>
                                 <HStack>
                                   {/* <Image src={team2Src} width={"20px"} /> */}
-                                  <Text opacity={"70%"} fontWeight={"medium"}>
-                                    {
+                                  <Text
+                                    opacity={"70%"}
+                                    fontWeight={
+                                      sport.home_team ===
                                       sport.bookmakers[0]?.markets[0]
                                         .outcomes[1].name
+                                        ? "bold"
+                                        : "medium"
                                     }
+                                  >
+                                    {sport.home_team ===
+                                    sport.bookmakers[0]?.markets[0].outcomes[1]
+                                      .name
+                                      ? sport.home_team
+                                      : sport.away_team}{" "}
+                                    {sport.home_team ===
+                                    sport.bookmakers[0]?.markets[0].outcomes[1]
+                                      .name
+                                      ? "(H)"
+                                      : "(A)"}
                                   </Text>
                                 </HStack>
                               </VStack>
