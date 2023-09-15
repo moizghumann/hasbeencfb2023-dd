@@ -50,6 +50,8 @@ export default function Dashboard() {
       spread?: number;
       totals?: string;
       point?: number;
+      home_team?: string;
+      away_team?: string;
     }[]
   >([]);
 

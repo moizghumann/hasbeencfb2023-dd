@@ -138,9 +138,9 @@ export default function AllBets({ bets, allUsers }: any) {
                 <Td textAlign="center">{allUsers[bet.id]?.email}</Td>
                 <Td textAlign="center">
                   {bet.guesses.map((guess: any, i: number) => (
-                    <>
+                    <Box>
                       {guess.type === "Spread" ? (
-                        <>
+                        <Box>
                           <Text>
                             <Text fontWeight={500} as="span">
                               Bet No. {i + 1}{" "}
@@ -152,9 +152,9 @@ export default function AllBets({ bets, allUsers }: any) {
                             </Text>{" "}
                           </Text>
                           <br />
-                        </>
+                        </Box>
                       ) : (
-                        <>
+                        <Box>
                           <Text as="span" fontWeight={500}>
                             Bet No. {i + 1}
                           </Text>
@@ -168,28 +168,16 @@ export default function AllBets({ bets, allUsers }: any) {
                               {guess.totals} {guess.point}
                             </Text>
                             <Box>
-                              {bets
-                                ? // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                                  findCurrentTotats(guess.gameId, bets)
-                                    .home_team
-                                : null}
-                              <br />
-                              vs
-                              <br />
-                              {bets
-                                ? // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                                  findCurrentTotats(guess.gameId, bets)
-                                    .away_team
-                                : null}
+                              {guess.home_team} vs {guess.away_team}
                             </Box>
                           </VStack>{" "}
                           <Text fontWeight={500} as="span">
                             {" "}
                             {guess.status}
                           </Text>{" "}
-                        </>
+                        </Box>
                       )}
-                    </>
+                    </Box>
                   ))}
                 </Td>
                 {currentUser?.role === "admin" ? (

@@ -110,6 +110,8 @@ interface CDashboardProps {
     spread?: number;
     totals?: string;
     point?: number;
+    home_team?: string;
+    away_team?: string;
   }) => void;
   bets: {
     gameId: string;
@@ -418,6 +420,8 @@ export default function CDashboard(props: CDashboardProps) {
                                             point:
                                               sport.bookmakers[0]?.markets[1]
                                                 ?.outcomes[0].point,
+                                            home_team: sport.home_team,
+                                            away_team: sport.away_team,
                                           });
                                         }
                                       }}
@@ -480,6 +484,8 @@ export default function CDashboard(props: CDashboardProps) {
                                             point:
                                               sport.bookmakers[0]?.markets[1]
                                                 ?.outcomes[1].point,
+                                            home_team: sport.home_team,
+                                            away_team: sport.away_team,
                                           });
                                         }
                                       }}
