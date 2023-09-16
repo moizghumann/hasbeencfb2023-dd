@@ -140,48 +140,69 @@ export default function AllBets({ allUsers }: any) {
                 <Td textAlign="center">{allUsers[bet.id]?.email}</Td>
                 <Td textAlign="center">
                   <GuessesModal>
-                    {bet.guesses.map((guess: any, i: number) => (
-                      <Box>
-                        {guess.type === "Spread" ? (
-                          <Box>
-                            <Text>
-                              <Text fontWeight={500} as="span">
-                                Bet No. {i + 1}{" "}
-                              </Text>{" "}
-                              Team: {guess.team}
-                              <Text fontWeight={500} as="span">
-                                {" "}
-                                {guess.status}
-                              </Text>{" "}
-                            </Text>
-                            <br />
-                          </Box>
-                        ) : (
-                          <Box>
-                            <Text as="span" fontWeight={500}>
-                              Bet No. {i + 1}
-                            </Text>
-                            <VStack
-                              display="inline-flex"
-                              justifyContent="center"
-                              mb="5"
-                            >
-                              {/* <Text>Totals</Text> */}
-                              <Text>
-                                {guess.totals} {guess.point}
-                              </Text>
-                              <Box>
-                                {guess.home_team} vs {guess.away_team}
-                              </Box>
-                            </VStack>{" "}
-                            <Text fontWeight={500} as="span">
-                              {" "}
-                              {guess.status}
-                            </Text>{" "}
-                          </Box>
-                        )}
-                      </Box>
-                    ))}
+                    <Table>
+                      <Thead>
+                        <Th textAlign="center">No.</Th>
+                        <Th textAlign="center">Game/Team</Th>
+                        <Th textAlign="center">Status</Th>
+                        <Th textAlign="center">Type</Th>
+                        <Th textAlign="center">Bet</Th>
+                      </Thead>
+                      <Tbody>
+                        {bet.guesses.map((guess: any, i: number) => (
+                          <Tr>
+                            {guess.type === "Spread" ? (
+                              <>
+                                <Td fontWeight={500} fontSize="sm">
+                                  {i + 1}
+                                </Td>
+                                <Td textAlign="center" fontSize="sm">
+                                  {guess.team}
+                                </Td>
+                                <Td
+                                  textAlign="center"
+                                  fontWeight={500}
+                                  fontSize="sm"
+                                >
+                                  {guess.status}
+                                </Td>
+                                <Td textAlign="center">Spread</Td>
+                                <Td textAlign="center">{guess.spread}</Td>
+                              </>
+                            ) : (
+                              <>
+                                <Td fontWeight={500} fontSize="sm">
+                                  {i + 1}
+                                </Td>
+                                <Td fontSize="sm">
+                                  <VStack justifyContent="center" mb="5">
+                                    <Text textAlign="center">
+                                      {guess.home_team}
+                                    </Text>
+                                    <Text textAlign="center">vs</Text>
+                                    <Text textAlign="center">
+                                      {guess.away_team}
+                                    </Text>
+                                  </VStack>
+                                </Td>
+                                <Td
+                                  textAlign="center"
+                                  fontWeight={500}
+                                  fontSize="sm"
+                                >
+                                  {guess.status}
+                                </Td>
+                                <Td textAlign="center">Totals</Td>
+                                <Td textAlign="center">
+                                  <Text>{guess.totals}</Text>
+                                  <Text>{guess.point}</Text>
+                                </Td>
+                              </>
+                            )}
+                          </Tr>
+                        ))}
+                      </Tbody>
+                    </Table>
                   </GuessesModal>
                 </Td>
                 {currentUser?.role === "admin" ? (

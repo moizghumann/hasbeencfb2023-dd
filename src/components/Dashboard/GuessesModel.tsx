@@ -13,11 +13,11 @@ export default function GuessesModal({ children }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Button onClick={onOpen} colorScheme="orange">
+      <Button onClick={onOpen} colorScheme="orange" size="sm">
         User Guesses
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size="3xl">
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>User Guesses</ModalHeader>
