@@ -352,7 +352,7 @@ export default function CDashboard(props: CDashboardProps) {
                                             status: "in-progress",
                                             team: sport.bookmakers[0]
                                               ?.markets[0].outcomes[1].name,
-                                            type: "spread",
+                                            type: "Spread",
                                             spread:
                                               sport.bookmakers[0]?.markets[0]
                                                 .outcomes[1].point,

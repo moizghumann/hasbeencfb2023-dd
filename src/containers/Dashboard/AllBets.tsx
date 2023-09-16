@@ -76,6 +76,8 @@ export default function AllBets({ bets, allUsers }: any) {
     };
   }, [currentUser]);
 
+  console.log(allBets);
+
   return show ? (
     <Box w="full" maxW="full" mb="5" bg="white" p="5" rounded="lg">
       <HStack justifyContent="space-between">

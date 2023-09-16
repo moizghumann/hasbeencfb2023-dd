@@ -274,28 +274,17 @@ export default function Dashboard() {
                       <Td textAlign="center">
                         {bet.type === "totals" ? (
                           <>
-                            {data?.data
-                              ? findCurrentTotats(bet.gameId, data?.data)
-                                  .home_team
-                              : null}
+                            {bet.home_team}
                             <br />
                             vs
                             <br />
-                            {data?.data
-                              ? findCurrentTotats(bet.gameId, data?.data)
-                                  .away_team
-                              : null}
+                            {bet.away_team}
                           </>
                         ) : (
                           bet.team
                         )}
                       </Td>
-                      <Td textAlign="center">
-                        {
-                          findCurrentSpreads(bet.team, data?.data)?.spreads
-                            ?.point
-                        }
-                      </Td>
+                      <Td textAlign="center">{bet.spread}</Td>
                       <Td textAlign="center">
                         {bet.type === "totals" ? (
                           <>
