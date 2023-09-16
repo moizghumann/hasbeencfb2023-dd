@@ -142,7 +142,7 @@ export default function AllBets({ allUsers }: any) {
                         <Th textAlign="center">Game/Team</Th>
                         <Th textAlign="center">Status</Th>
                         <Th textAlign="center">Type</Th>
-                        <Th textAlign="center">Bet</Th>
+                        <Th textAlign="center">Locked At</Th>
                       </Thead>
                       <Tbody>
                         {bet.guesses.map((guess: any, i: number) => (
