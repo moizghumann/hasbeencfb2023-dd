@@ -22,7 +22,6 @@ import { setDoc, doc, collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import ConfirmModal from "./ConfirmModal";
 import AllBets from "./AllBets";
-import { findCurrentTotats, findCurrentSpreads } from "./utls";
 
 export default function Dashboard() {
   const { isOpen, onClose, onOpen } = useDisclosure();
