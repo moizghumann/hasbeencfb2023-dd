@@ -125,9 +125,6 @@ export default function AllBets({ allUsers }: any) {
                 Name
               </Th>
               <Th fontSize="base" textAlign="center">
-                Email
-              </Th>
-              <Th fontSize="base" textAlign="center">
                 Guesses
               </Th>
               {currentUser?.role === "admin" ? <Th>Action</Th> : null}
@@ -137,7 +134,6 @@ export default function AllBets({ allUsers }: any) {
             {allBets.map((bet) => (
               <Tr bgColor="#F3F4F7">
                 <Td textAlign="center">{allUsers[bet.id]?.name}</Td>
-                <Td textAlign="center">{allUsers[bet.id]?.email}</Td>
                 <Td textAlign="center">
                   <GuessesModal>
                     <Table>
