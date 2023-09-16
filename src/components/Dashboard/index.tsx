@@ -50,6 +50,7 @@ const CustomCheckbox = ({
 
   return (
     <Box
+      {...otherProps}
       w="35px"
       h="35px"
       bg={
@@ -69,9 +70,12 @@ const CustomCheckbox = ({
       display="grid"
       placeContent="center"
       pointerEvents={
-        (isDisabled || disabled || limitExceed) && !isSelected ? "none" : "all"
+        isDisabled
+          ? "none"
+          : (disabled || limitExceed) && !isSelected
+          ? "none"
+          : "all"
       }
-      {...otherProps}
     >
       {isSelected ? <BsCheckLg color="#FF9F1C" size="30px" /> : null}
     </Box>
@@ -127,14 +131,7 @@ interface CDashboardProps {
 }
 
 export default function CDashboard(props: CDashboardProps) {
-  const {
-    data,
-    isLoading,
-    bets,
-    onSetBet,
-    removeBet,
-    isSubmittedForCurrentWeek,
-  } = props;
+  const { data, isLoading, bets, onSetBet, removeBet } = props;
 
   return (
     <Box w="full" maxW={{ base: "full", md: "full" }} mx="auto">
@@ -272,11 +269,6 @@ export default function CDashboard(props: CDashboardProps) {
                                       }
                                     </Box>
                                     <CustomCheckbox
-                                      pointerEvents={
-                                        isSubmittedForCurrentWeek
-                                          ? "none"
-                                          : "all"
-                                      }
                                       onClick={() => {
                                         if (
                                           bets.some((bet) => {
@@ -330,11 +322,6 @@ export default function CDashboard(props: CDashboardProps) {
                                       }
                                     </Box>
                                     <CustomCheckbox
-                                      pointerEvents={
-                                        isSubmittedForCurrentWeek
-                                          ? "none"
-                                          : "all"
-                                      }
                                       onClick={() => {
                                         if (
                                           bets.some((bet) => {
@@ -392,11 +379,6 @@ export default function CDashboard(props: CDashboardProps) {
                                       }
                                     </Box>
                                     <CustomCheckbox
-                                      pointerEvents={
-                                        isSubmittedForCurrentWeek
-                                          ? "none"
-                                          : "all"
-                                      }
                                       onClick={() => {
                                         if (
                                           bets.some((bet) => {
@@ -456,11 +438,6 @@ export default function CDashboard(props: CDashboardProps) {
                                       }
                                     </Box>
                                     <CustomCheckbox
-                                      pointerEvents={
-                                        isSubmittedForCurrentWeek
-                                          ? "none"
-                                          : "all"
-                                      }
                                       onClick={() => {
                                         if (
                                           bets.some((bet) => {
