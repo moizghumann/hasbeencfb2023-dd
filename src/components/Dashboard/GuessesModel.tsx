@@ -22,7 +22,7 @@ export default function GuessesModal({ children }: any) {
         <ModalContent>
           <ModalHeader>User Guesses</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>{children}</ModalBody>
+          <ModalBody paddingX={"1"}>{children}</ModalBody>
         </ModalContent>
       </Modal>
     </>

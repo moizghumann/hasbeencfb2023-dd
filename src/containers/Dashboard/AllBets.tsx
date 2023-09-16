@@ -14,6 +14,7 @@ import {
   VStack,
   Button,
   HStack,
+  Badge,
 } from "@chakra-ui/react";
 import { db } from "../../firebase";
 import { collection, onSnapshot } from "firebase/firestore";
@@ -136,6 +137,7 @@ export default function AllBets({ allUsers }: any) {
                 <Td textAlign="center">{allUsers[bet.id]?.name}</Td>
                 <Td textAlign="center">
                   <GuessesModal>
+                    <Box overflowX={"auto"} whiteSpace={"nowrap"}>
                     <Table>
                       <Thead>
                         <Th textAlign="center">No.</Th>
@@ -146,7 +148,7 @@ export default function AllBets({ allUsers }: any) {
                       </Thead>
                       <Tbody>
                         {bet.guesses.map((guess: any, i: number) => (
-                          <Tr>
+                          <Tr bgColor={"#F3F4F7"} marginBottom={'20px'} border={"2px"} borderColor={"#bdbdbd"}>
                             {guess.type === "Spread" ? (
                               <>
                                 <Td fontWeight={500} fontSize="sm">
@@ -160,7 +162,9 @@ export default function AllBets({ allUsers }: any) {
                                   fontWeight={500}
                                   fontSize="sm"
                                 >
+                                  <Badge colorScheme="green">
                                   {guess.status}
+                                  </Badge>
                                 </Td>
                                 <Td textAlign="center">Spread</Td>
                                 <Td textAlign="center">{guess.spread}</Td>
@@ -186,7 +190,9 @@ export default function AllBets({ allUsers }: any) {
                                   fontWeight={500}
                                   fontSize="sm"
                                 >
+                                  <Badge colorScheme="green">
                                   {guess.status}
+                                  </Badge>
                                 </Td>
                                 <Td textAlign="center">Totals</Td>
                                 <Td textAlign="center">
@@ -199,6 +205,8 @@ export default function AllBets({ allUsers }: any) {
                         ))}
                       </Tbody>
                     </Table>
+                    </Box>
+                    
                   </GuessesModal>
                 </Td>
                 {currentUser?.role === "admin" ? (
