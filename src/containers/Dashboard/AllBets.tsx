@@ -138,7 +138,7 @@ export default function AllBets({ allUsers }: any) {
                 <Td textAlign="center">
                   <GuessesModal>
                     <Box overflowX={"auto"} whiteSpace={"nowrap"}>
-                    <Table>
+                    <Table marginBottom={"10px"}>
                       <Thead>
                         <Th textAlign="center">No.</Th>
                         <Th textAlign="center">Game/Team</Th>
