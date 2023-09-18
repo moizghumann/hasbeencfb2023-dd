@@ -58,6 +58,8 @@ export default function Dashboard() {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const [isDisabled, setIsDisabled] = useState(false);
+
   useEffect(() => {
     // TODO: need check if this bet is resovled or not
     if (currentUser) {
@@ -164,6 +166,22 @@ export default function Dashboard() {
   const onRemoveBet = (currentIndex: number) => {
     setBets(bets.filter((_, i) => i !== currentIndex));
   };
+
+  useEffect(() => {
+    const now = new Date();
+    const saturdayTime = new Date();
+    saturdayTime.setUTCHours(16, 0, 0); // 11 am CDT is 16:00 UTC
+    saturdayTime.setDate(saturdayTime.getDate() + (6 - saturdayTime.getDay())); // Find the next Saturday
+
+    const twentyFourHoursLater = new Date(saturdayTime);
+    twentyFourHoursLater.setHours(twentyFourHoursLater.getHours() + 24);
+
+    if (now >= saturdayTime && now < twentyFourHoursLater) {
+      setIsDisabled(true);
+    } else {
+      setIsDisabled(false);
+    }
+  }, []);
 
   useEffect(() => {
     let unsubscribeUsers: any = null;
@@ -300,7 +318,9 @@ export default function Dashboard() {
             </TableContainer>
             <Button
               colorScheme="orange"
-              isDisabled={bets.length !== 3 || isSubmittedForCurrentWeek}
+              isDisabled={
+                bets.length !== 3 || isSubmittedForCurrentWeek || isDisabled
+              }
               mt="5"
               w="full"
               onClick={onOpen}
