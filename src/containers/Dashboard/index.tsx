@@ -238,8 +238,8 @@ export default function Dashboard() {
         isLoading={isLoading}
       />
       <AllBets bets={data?.data} allUsers={allUsersMap} />
-      <Stack direction={{ base: "column", md: "row" }} spacing="5">
-        <Box w="full" maxW="500px" bg="white" p="5" rounded="lg">
+      <Stack direction={{ base: "column", md: "row" }} spacing="5" maxHeight={'88vh'}>
+        <Box w="full" maxW="500px" bg="white" p="5" rounded="lg"  overflowY={'auto'}>
           <Box>
             <Text fontSize="3xl" fontWeight={700} mb="2">
               Your Current Bets
