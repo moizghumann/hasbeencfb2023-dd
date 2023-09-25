@@ -40,7 +40,7 @@ const Header = () => {
             as={Link}
             to="/"
             color="#000"
-            borderTop="2px solid #2DCC70"
+            
             py="5"
           >
             Matches
