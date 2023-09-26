@@ -13,7 +13,6 @@ import {
   Tr,
   Text,
   Button,
-  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
