@@ -14,6 +14,7 @@ import {
   Text,
   Button,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../slices/store";
@@ -22,7 +23,10 @@ import { setDoc, doc, collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import ConfirmModal from "./ConfirmModal";
 import AllBets from "./AllBets";
+
 export default function Dashboard() {
+  const toast = useToast();
+
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   const { bets: RBets, currentUser } = useSelector(
@@ -122,44 +126,69 @@ export default function Dashboard() {
   };
 
   const onBetsSubmit = async () => {
-    if (currentUser) {
-      setIsLoading(true);
-      const betsWeeks = Object.keys(RBets);
-      const isPrevWeek = betsWeeks.length > 0;
+    try {
+      if (currentUser) {
+        setIsLoading(true);
+        const betsWeeks = Object.keys(RBets);
+        const isPrevWeek = betsWeeks.length > 0;
 
-      const __data = {
-        "week-1": [...bets],
-      };
+        const __data = {
+          "week-1": [...bets],
+        };
 
-      if (!isPrevWeek) {
-        dispatch(setRBets(__data));
+        if (!isPrevWeek) {
+          dispatch(setRBets(__data));
+
+          const betsRef = doc(db, "bets", currentUser?.uid);
+
+          await setDoc(betsRef, __data, { merge: true });
+
+          setIsSubmittedForCurrentWeek(true);
+          setIsLoading(false);
+
+          toast({
+            title: "Success",
+            description: "Bets Submitted Successfully!",
+            duration: 4000,
+            position: "top-right",
+            isClosable: true,
+            status: "success",
+          });
+          onClose();
+          return;
+        }
+
+        const key = betsWeeks[betsWeeks.length - 1];
+
+        const weekNumber = key.split("-")[1];
+
+        const _data = {
+          ...RBets,
+          [`week-${+weekNumber + 1}`]: [...bets],
+        };
+
+        dispatch(setRBets(_data));
 
         const betsRef = doc(db, "bets", currentUser?.uid);
 
-        await setDoc(betsRef, __data, { merge: true });
+        await setDoc(betsRef, _data, { merge: true });
 
-        setIsSubmittedForCurrentWeek(true);
         setIsLoading(false);
-        return;
+        setIsSubmittedForCurrentWeek(true);
+
+        toast({
+          title: "Success",
+          description: "Bets Submitted Successfully!",
+          duration: 4000,
+          position: "top-right",
+          isClosable: true,
+          status: "success",
+        });
+        onClose();
       }
-
-      const key = betsWeeks[betsWeeks.length - 1];
-
-      const weekNumber = key.split("-")[1];
-
-      const _data = {
-        ...RBets,
-        [`week-${+weekNumber + 1}`]: [...bets],
-      };
-
-      dispatch(setRBets(_data));
-
-      const betsRef = doc(db, "bets", currentUser?.uid);
-
-      await setDoc(betsRef, _data, { merge: true });
-
+    } catch (error) {
       setIsLoading(false);
-      setIsSubmittedForCurrentWeek(true);
+      console.log("SUBMIT_BET_ERROR", error);
     }
   };
 
@@ -237,9 +266,21 @@ export default function Dashboard() {
         onConfirm={onBetsSubmit}
         isLoading={isLoading}
       />
+
       <AllBets bets={data?.data} allUsers={allUsersMap} />
-      <Stack direction={{ base: "column", md: "row" }} spacing="5" maxHeight={'88vh'}>
-        <Box w="full" maxW="500px" bg="white" p="5" rounded="lg"  overflowY={'auto'}>
+      <Stack
+        direction={{ base: "column", md: "row" }}
+        spacing="5"
+        maxHeight={"88vh"}
+      >
+        <Box
+          w="full"
+          maxW="500px"
+          bg="white"
+          p="5"
+          rounded="lg"
+          overflowY={"auto"}
+        >
           <Box>
             <Text fontSize="3xl" fontWeight={700} mb="2">
               Your Current Bets
