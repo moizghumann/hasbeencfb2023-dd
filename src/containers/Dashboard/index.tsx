@@ -21,13 +21,12 @@ import { RootState } from "../../slices/store";
 import { setBets as setRBets } from "../../slices/app";
 import { setDoc, doc, collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
-import ConfirmModal from "./ConfirmModal";
 import AllBets from "./AllBets";
 
 export default function Dashboard() {
   const toast = useToast();
 
-  const { isOpen, onClose, onOpen } = useDisclosure();
+  // const { onClose } = useDisclosure();
 
   const { bets: RBets, currentUser } = useSelector(
     (state: RootState) => state.app
@@ -154,7 +153,7 @@ export default function Dashboard() {
             isClosable: true,
             status: "success",
           });
-          onClose();
+          // onClose();
           return;
         }
 
@@ -184,7 +183,7 @@ export default function Dashboard() {
           isClosable: true,
           status: "success",
         });
-        onClose();
+        // onClose();
       }
     } catch (error) {
       setIsLoading(false);
