@@ -143,6 +143,7 @@ export default function CDashboard(props: CDashboardProps) {
           px="5"
           py="3"
           rounded="lg"
+          overflowY={'auto'}
         >
           <Text fontSize="3xl" fontWeight={700} mb="2">
             Matches
