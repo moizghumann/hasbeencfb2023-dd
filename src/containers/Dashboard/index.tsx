@@ -280,6 +280,7 @@ export default function Dashboard() {
           p="5"
           rounded="lg"
           overflowY={"auto"}
+          minH="88vh"
         >
           <Box>
             <Text fontSize="3xl" fontWeight={700} mb="2">
