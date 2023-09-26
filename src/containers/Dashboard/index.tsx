@@ -260,12 +260,12 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      <ConfirmModal
+      {/* <ConfirmModal
         isOpen={isOpen}
         onClose={onClose}
         onConfirm={onBetsSubmit}
         isLoading={isLoading}
-      />
+      /> */}
 
       <AllBets bets={data?.data} allUsers={allUsersMap} />
       <Stack
@@ -365,7 +365,8 @@ export default function Dashboard() {
               }
               mt="5"
               w="full"
-              onClick={onOpen}
+              onClick={onBetsSubmit}
+              isLoading={isLoading}
             >
               Submit
             </Button>
