@@ -46,6 +46,7 @@ export default function SignIn() {
 
       dispatch(
         setCurrentUser({
+          uid: user.user.uid,
           ..._user,
         })
       );
