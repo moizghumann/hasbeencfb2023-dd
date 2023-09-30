@@ -8,6 +8,8 @@ import Profile from "./ProfileMenu";
 import { Link } from "react-router-dom";
 import { RootState } from "../../../slices/store";
 import { setBets, setCurrentUser } from "../../../slices/app";
+import myImage from '../../../assets/fire.svg';
+import soccer from '../../../assets/american-football.svg';
 import { AiFillFire } from "react-icons/ai";
 
 const Header = () => {
@@ -36,19 +38,14 @@ const Header = () => {
         shadow="sm"
       >
         <Flex alignItems="center" justifyContent="space-between">
-          <Text
-            as={Link}
-            to="/"
-            color="#000"
-            
-            py="5"
-          >
-            Matches
-          </Text>
+          <Box paddingY={4}>
+          <img src={soccer} width={30} height={30}/>
+          </Box>
+        
           <HStack spacing={3} alignItems="center">
             {currentUser ? (
               <Box pos="relative">
-                <AiFillFire size="25px" />
+                <img src={myImage} width={30} height={30}/>
                 <Text
                   pos="absolute"
                   top="-8px"
