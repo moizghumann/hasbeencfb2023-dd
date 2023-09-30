@@ -7,11 +7,8 @@ import {
   HStack,
   Text,
   Box,
-  grid,
-  Center
 } from "@chakra-ui/react";
 import person from '../../../assets/icons8-person-94.png'
-import { IoPersonCircleSharp } from "react-icons/io5";
 import { FaPowerOff } from "react-icons/fa";
 
 interface ProfileProps {

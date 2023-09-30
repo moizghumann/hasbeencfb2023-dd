@@ -5,12 +5,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { signOut } from "firebase/auth";
 import { auth } from "../../../firebase";
 import Profile from "./ProfileMenu";
-import { Link } from "react-router-dom";
+
 import { RootState } from "../../../slices/store";
 import { setBets, setCurrentUser } from "../../../slices/app";
 import myImage from '../../../assets/fire.svg';
 import soccer from '../../../assets/american-football.svg';
-import { AiFillFire } from "react-icons/ai";
 
 
 const Header = () => {
