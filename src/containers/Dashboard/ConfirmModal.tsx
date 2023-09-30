@@ -32,7 +32,6 @@ export default function ConfirmModal(props: ConfirmModalProps) {
                 variant="outline"
                 onClick={() => {
                   onConfirm();
-                  onClose();
                 }}
                 w="full"
                 isLoading={isLoading}

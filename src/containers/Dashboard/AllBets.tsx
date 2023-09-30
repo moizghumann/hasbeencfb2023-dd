@@ -77,8 +77,6 @@ export default function AllBets({ allUsers }: any) {
     };
   }, [currentUser]);
 
-  console.log(allBets);
-
   return show ? (
     <Box w="full" maxW="full" mb="5" bg="white" p="5" rounded="lg">
       <HStack justifyContent="space-between">
@@ -138,75 +136,79 @@ export default function AllBets({ allUsers }: any) {
                 <Td textAlign="center">
                   <GuessesModal>
                     <Box overflowX={"auto"} whiteSpace={"nowrap"}>
-                    <Table marginBottom={"10px"}>
-                      <Thead>
-                        <Th textAlign="center">No.</Th>
-                        <Th textAlign="center">Game/Team</Th>
-                        <Th textAlign="center">Status</Th>
-                        <Th textAlign="center">Type</Th>
-                        <Th textAlign="center">Locked At</Th>
-                      </Thead>
-                      <Tbody>
-                        {bet.guesses.map((guess: any, i: number) => (
-                          <Tr bgColor={"#F3F4F7"} marginBottom={'20px'} border={"2px"} borderColor={"#bdbdbd"}>
-                            {guess.type === "Spread" ? (
-                              <>
-                                <Td fontWeight={500} fontSize="sm">
-                                  {i + 1}
-                                </Td>
-                                <Td textAlign="center" fontSize="sm">
-                                  {guess.team}
-                                </Td>
-                                <Td
-                                  textAlign="center"
-                                  fontWeight={500}
-                                  fontSize="sm"
-                                >
-                                  <Badge colorScheme="green">
-                                  {guess.status}
-                                  </Badge>
-                                </Td>
-                                <Td textAlign="center">Spread</Td>
-                                <Td textAlign="center">{guess.spread}</Td>
-                              </>
-                            ) : (
-                              <>
-                                <Td fontWeight={500} fontSize="sm">
-                                  {i + 1}
-                                </Td>
-                                <Td fontSize="sm">
-                                  <VStack justifyContent="center" mb="5">
-                                    <Text textAlign="center">
-                                      {guess.home_team}
-                                    </Text>
-                                    <Text textAlign="center">vs</Text>
-                                    <Text textAlign="center">
-                                      {guess.away_team}
-                                    </Text>
-                                  </VStack>
-                                </Td>
-                                <Td
-                                  textAlign="center"
-                                  fontWeight={500}
-                                  fontSize="sm"
-                                >
-                                  <Badge colorScheme="green">
-                                  {guess.status}
-                                  </Badge>
-                                </Td>
-                                <Td textAlign="center">Totals</Td>
-                                <Td textAlign="center">
-                                  <Text>{guess.totals}</Text>
-                                  <Text>{guess.point}</Text>
-                                </Td>
-                              </>
-                            )}
-                          </Tr>
-                        ))}
-                      </Tbody>
-                    </Table>
+                      <Table marginBottom={"10px"}>
+                        <Thead>
+                          <Th textAlign="center">No.</Th>
+                          <Th textAlign="center">Game/Team</Th>
+                          <Th textAlign="center">Status</Th>
+                          <Th textAlign="center">Type</Th>
+                          <Th textAlign="center">Locked At</Th>
+                        </Thead>
+                        <Tbody>
+                          {bet.guesses.map((guess: any, i: number) => (
+                            <Tr
+                              bgColor={"#F3F4F7"}
+                              marginBottom={"20px"}
+                              border={"2px"}
+                              borderColor={"#bdbdbd"}
+                            >
+                              {guess.type === "Spread" ? (
+                                <>
+                                  <Td fontWeight={500} fontSize="sm">
+                                    {i + 1}
+                                  </Td>
+                                  <Td textAlign="center" fontSize="sm">
+                                    {guess.team}
+                                  </Td>
+                                  <Td
+                                    textAlign="center"
+                                    fontWeight={500}
+                                    fontSize="sm"
+                                  >
+                                    <Badge colorScheme="green">
+                                      {guess.status}
+                                    </Badge>
+                                  </Td>
+                                  <Td textAlign="center">Spread</Td>
+                                  <Td textAlign="center">{guess.spread}</Td>
+                                </>
+                              ) : (
+                                <>
+                                  <Td fontWeight={500} fontSize="sm">
+                                    {i + 1}
+                                  </Td>
+                                  <Td fontSize="sm">
+                                    <VStack justifyContent="center" mb="5">
+                                      <Text textAlign="center">
+                                        {guess.home_team}
+                                      </Text>
+                                      <Text textAlign="center">vs</Text>
+                                      <Text textAlign="center">
+                                        {guess.away_team}
+                                      </Text>
+                                    </VStack>
+                                  </Td>
+                                  <Td
+                                    textAlign="center"
+                                    fontWeight={500}
+                                    fontSize="sm"
+                                  >
+                                    <Badge colorScheme="green">
+                                      {guess.status}
+                                    </Badge>
+                                  </Td>
+                                  <Td textAlign="center">Totals</Td>
+                                  <Td textAlign="center">
+                                    <Text>{guess.totals}</Text>
+                                    <Text>{guess.point}</Text>
+                                  </Td>
+                                </>
+                              )}
+                            </Tr>
+                          ))}
+                        </Tbody>
+                      </Table>
                     </Box>
-                    
                   </GuessesModal>
                 </Td>
                 {currentUser?.role === "admin" ? (
