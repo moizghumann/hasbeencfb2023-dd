@@ -12,6 +12,7 @@ import myImage from '../../../assets/fire.svg';
 import soccer from '../../../assets/american-football.svg';
 import { AiFillFire } from "react-icons/ai";
 
+
 const Header = () => {
   const dispatch = useDispatch();
 

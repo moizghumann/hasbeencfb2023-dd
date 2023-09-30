@@ -6,8 +6,11 @@ import {
   IconButton,
   HStack,
   Text,
+  Box,
+  grid,
+  Center
 } from "@chakra-ui/react";
-
+import person from '../../../assets/icons8-person-94.png'
 import { IoPersonCircleSharp } from "react-icons/io5";
 import { FaPowerOff } from "react-icons/fa";
 
@@ -28,7 +31,9 @@ export default function Profile(props: ProfileProps) {
         variant="unstyled"
         icon={
           <HStack>
-            <IoPersonCircleSharp fontSize="40px" color="black" />
+            <Box padding={1} bgColor={'#22668D'} borderRadius={10}>
+            <img src={person} width={30} height={30}/>
+            </Box>
             <Text>{currentUser?.name}</Text>
           </HStack>
         }
