@@ -142,7 +142,7 @@ export default function CDashboard(props: CDashboardProps) {
           color="brand.primary"
           px="5"
           py="3"
-          rounded="lg"
+          rounded="xl"
           overflowY={"auto"}
         >
           <Text fontSize={{ base: "2xl", md: "3xl" }} fontWeight={700} mb="2">

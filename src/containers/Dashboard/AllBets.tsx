@@ -88,7 +88,7 @@ export default function AllBets({ allUsers }: any) {
       <Accordion allowMultiple mb="5">
         <AccordionItem bg="white" display={{ base: "block", md: "none" }} >
           <h2>
-            <AccordionButton rounded="md" borderRadius={'lg'}>
+            <AccordionButton rounded="md" borderRadius={'xl'}>
               <Stack
                 direction={{ base: "column", sm: "row" }}
                 w="full"

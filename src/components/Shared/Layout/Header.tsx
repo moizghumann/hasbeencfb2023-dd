@@ -32,7 +32,7 @@ const Header = () => {
         bg="#fff"
         w="full"
         px={{
-          base: 2,
+          base: 5,
           sm: 10,
         }}
         shadow="sm"

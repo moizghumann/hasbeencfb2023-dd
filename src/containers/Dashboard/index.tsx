@@ -281,7 +281,7 @@ export default function Dashboard() {
                 w="full"
                 alignItems="center"
               >
-                <Text fontSize="2xl" fontWeight={700} mb="2">
+                <Text fontSize="2xl" fontWeight={700} my="1">
                   Your Current Bets
                 </Text>
 
@@ -378,7 +378,7 @@ export default function Dashboard() {
         </AccordionItem>
       </Accordion>
       <Accordion allowMultiple mb="5">
-        <AccordionItem bg="white" display={{ base: "block", md: "none" }} borderRadius={'lg'}>
+        <AccordionItem bg="white" display={{ base: "block", md: "none" }} borderRadius={'xl'}>
           <h2>
             <AccordionButton rounded="md">
               <Stack
@@ -387,7 +387,7 @@ export default function Dashboard() {
                 w="full"
                 alignItems="center"
               >
-                <Text fontSize="2xl" fontWeight={700} mb="2">
+                <Text fontSize="2xl" fontWeight={700} my="1">
                   Leader Board
                 </Text>
 
@@ -536,7 +536,7 @@ export default function Dashboard() {
             </Button>
           </Box>
           <Box mt="10">
-            <Text fontSize="3xl" fontWeight={700} mb="2">
+            <Text fontSize="3xl" fontWeight={700} my="1">
               Leader Board
             </Text>
             <TableContainer w="full">
