@@ -14,6 +14,11 @@ import {
   Text,
   Button,
   useToast,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../slices/store";
@@ -266,6 +271,166 @@ export default function Dashboard() {
       /> */}
 
       <AllBets bets={data?.data} allUsers={allUsersMap} />
+      <Accordion allowMultiple mb="5">
+        <AccordionItem bg="white" display={{ base: "block", md: "none" }}>
+          <h2>
+            <AccordionButton rounded="md">
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                w="full"
+                alignItems="center"
+              >
+                <Text fontSize="2xl" fontWeight={700} mb="2">
+                  Your Current Bets
+                </Text>
+
+                <AccordionIcon />
+              </Stack>
+            </AccordionButton>
+          </h2>
+          <AccordionPanel>
+            <TableContainer w="full">
+              <Table
+                variant="unstyled"
+                colorScheme="gray"
+                style={{ borderCollapse: "separate", borderSpacing: "0 1em" }}
+              >
+                <Thead>
+                  <Tr bgColor="#F3F4F7">
+                    <Th
+                      fontSize="base"
+                      textAlign="center"
+                      display={isSubmittedForCurrentWeek ? "none" : "block"}
+                    >
+                      Action
+                    </Th>
+                    <Th fontSize="base" textAlign="center">
+                      Team(s)
+                    </Th>
+                    <Th fontSize="base" textAlign="center">
+                      Spread
+                    </Th>
+                    <Th fontSize="base" textAlign="center">
+                      U/O
+                    </Th>
+                    <Th fontSize="base" textAlign="center">
+                      Bet Type
+                    </Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {bets.map((bet, i) => (
+                    <Tr bgColor="#F3F4F7">
+                      <Td
+                        display={isSubmittedForCurrentWeek ? "none" : "block"}
+                      >
+                        <Button
+                          size="xs"
+                          colorScheme="red"
+                          onClick={() => onRemoveBet(i)}
+                        >
+                          Remove
+                        </Button>
+                      </Td>
+                      <Td textAlign="center">
+                        {bet.type === "totals" ? (
+                          <>
+                            {bet.home_team}
+                            <br />
+                            vs
+                            <br />
+                            {bet.away_team}
+                          </>
+                        ) : (
+                          bet.team
+                        )}
+                      </Td>
+                      <Td textAlign="center">{bet.spread}</Td>
+                      <Td textAlign="center">
+                        {bet.type === "totals" ? (
+                          <>
+                            {bet.totals}
+                            <br />
+                            {bet.point}
+                          </>
+                        ) : null}
+                      </Td>
+                      <Td textAlign="center">{bet.type}</Td>
+                    </Tr>
+                  ))}
+                </Tbody>
+              </Table>
+            </TableContainer>
+            <Button
+              colorScheme="orange"
+              isDisabled={
+                bets.length !== 3 || isSubmittedForCurrentWeek || isDisabled
+              }
+              mt="5"
+              w="full"
+              onClick={onBetsSubmit}
+              isLoading={isLoading}
+            >
+              Submit
+            </Button>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
+      <Accordion allowMultiple mb="5">
+        <AccordionItem bg="white" display={{ base: "block", md: "none" }}>
+          <h2>
+            <AccordionButton rounded="md">
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                w="full"
+                alignItems="center"
+              >
+                <Text fontSize="2xl" fontWeight={700} mb="2">
+                  Leader Board
+                </Text>
+
+                <AccordionIcon />
+              </Stack>
+            </AccordionButton>
+          </h2>
+          <AccordionPanel>
+            <TableContainer w="full">
+              <Table
+                variant="unstyled"
+                colorScheme="gray"
+                style={{ borderCollapse: "separate", borderSpacing: "0 1em" }}
+              >
+                <Thead>
+                  <Tr bgColor="#F3F4F7">
+                    <Th fontSize="base" textAlign="center">
+                      User
+                    </Th>
+                    <Th fontSize="base" textAlign="center">
+                      Score
+                    </Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {allUsers.map((user) => {
+                    return (
+                      <Tr bgColor="#F3F4F7">
+                        <Td key={user.id} textAlign="center">
+                          {user?.name}
+                        </Td>
+                        <Td textAlign="center">
+                          {user?.points !== undefined ? user?.points : 0}
+                        </Td>
+                      </Tr>
+                    );
+                  })}
+                </Tbody>
+              </Table>
+            </TableContainer>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
       <Stack
         direction={{ base: "column", md: "row" }}
         spacing="5"
@@ -279,6 +444,7 @@ export default function Dashboard() {
           rounded="lg"
           overflowY={"auto"}
           minH="88vh"
+          display={{ base: "none", md: "block" }}
         >
           <Box>
             <Text fontSize="3xl" fontWeight={700} mb="2">

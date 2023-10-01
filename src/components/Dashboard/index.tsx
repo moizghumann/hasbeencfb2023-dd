@@ -143,9 +143,9 @@ export default function CDashboard(props: CDashboardProps) {
           px="5"
           py="3"
           rounded="lg"
-          overflowY={'auto'}
+          overflowY={"auto"}
         >
-          <Text fontSize="3xl" fontWeight={700} mb="2">
+          <Text fontSize={{ base: "2xl", md: "3xl" }} fontWeight={700} mb="2">
             Matches
           </Text>
           <Box>
