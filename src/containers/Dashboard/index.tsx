@@ -271,8 +271,8 @@ export default function Dashboard() {
       /> */}
 
       <AllBets bets={data?.data} allUsers={allUsersMap} />
-      <Accordion allowMultiple mb="5">
-        <AccordionItem bg="white" display={{ base: "block", md: "none" }}>
+      <Accordion allowMultiple mb="5" >
+        <AccordionItem bg="white" display={{ base: "block", md: "none" }} borderRadius={'xl'} >
           <h2>
             <AccordionButton rounded="md">
               <Stack
@@ -378,7 +378,7 @@ export default function Dashboard() {
         </AccordionItem>
       </Accordion>
       <Accordion allowMultiple mb="5">
-        <AccordionItem bg="white" display={{ base: "block", md: "none" }}>
+        <AccordionItem bg="white" display={{ base: "block", md: "none" }} borderRadius={'lg'}>
           <h2>
             <AccordionButton rounded="md">
               <Stack
