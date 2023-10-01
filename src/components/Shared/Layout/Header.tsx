@@ -9,7 +9,7 @@ import Profile from "./ProfileMenu";
 import { RootState } from "../../../slices/store";
 import { setBets, setCurrentUser } from "../../../slices/app";
 import myImage from '../../../assets/fire.svg';
-import soccer from '../../../assets/american-football.svg';
+
 
 
 const Header = () => {
@@ -39,7 +39,8 @@ const Header = () => {
       >
         <Flex alignItems="center" justifyContent="space-between">
           <Box paddingY={4}>
-          <img src={soccer} width={30} height={30}/>
+          
+          <Text fontSize={30}>🏈</Text>
           </Box>
         
           <HStack spacing={3} alignItems="center">
