@@ -7,6 +7,7 @@ import {
   HStack,
   Text,
   Box,
+  VStack
 } from "@chakra-ui/react";
 import person from '../../../assets/icons8-person-94.png'
 import { FaPowerOff } from "react-icons/fa";
@@ -31,7 +32,7 @@ export default function Profile(props: ProfileProps) {
             <Box padding={1} bgColor={'#22668D'} borderRadius={10}>
             <img src={person} width={30} height={30}/>
             </Box>
-            <Text>{currentUser?.name}</Text>
+            
           </HStack>
         }
       />
@@ -53,12 +54,17 @@ export default function Profile(props: ProfileProps) {
             color: "brand.primary",
           }}
         >
-          <HStack onClick={onLogout} w="full">
+          <VStack rowGap={1}>
+          <Text>{currentUser?.name}</Text>
+          <HStack onClick={onLogout} w="full" border={'solid'} borderWidth={2} px={2} py={1} borderRadius={'lg'} mt={2}>
+
             <FaPowerOff />
-            <Text mt="-6px" fontWeight={600}>
+            
+            <Text py={2} fontWeight={600} >
               Log out
             </Text>
           </HStack>
+          </VStack>
         </MenuItem>
       </MenuList>
     </Menu>
