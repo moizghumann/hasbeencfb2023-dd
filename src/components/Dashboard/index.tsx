@@ -69,13 +69,13 @@ const CustomCheckbox = ({
       cursor="pointer"
       display="grid"
       placeContent="center"
-      // pointerEvents={
-      //   isDisabled
-      //     ? "none"
-      //     : (disabled || limitExceed) && !isSelected
-      //     ? "none"
-      //     : "all"
-      // }
+      pointerEvents={
+        isDisabled
+          ? "none"
+          : (disabled || limitExceed) && !isSelected
+          ? "none"
+          : "all"
+      }
     >
       {isSelected ? <BsCheckLg color="#FF9F1C" size="30px" /> : null}
     </Box>
