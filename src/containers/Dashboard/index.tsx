@@ -149,6 +149,8 @@ export default function Dashboard() {
           setIsSubmittedForCurrentWeek(true);
           setIsLoading(false);
 
+          window.location.reload();
+
           toast({
             title: "Success",
             description: "Bets Submitted Successfully!",
@@ -178,6 +180,8 @@ export default function Dashboard() {
 
         setIsLoading(false);
         setIsSubmittedForCurrentWeek(true);
+
+        window.location.reload()
 
         toast({
           title: "Success",
@@ -271,8 +275,12 @@ export default function Dashboard() {
       /> */}
 
       <AllBets bets={data?.data} allUsers={allUsersMap} />
-      <Accordion allowMultiple mb="5" >
-        <AccordionItem bg="white" display={{ base: "block", md: "none" }} borderRadius={'xl'} >
+      <Accordion allowMultiple mb="5">
+        <AccordionItem
+          bg="white"
+          display={{ base: "block", md: "none" }}
+          borderRadius={"xl"}
+        >
           <h2>
             <AccordionButton rounded="md">
               <Stack
@@ -378,7 +386,11 @@ export default function Dashboard() {
         </AccordionItem>
       </Accordion>
       <Accordion allowMultiple mb="5">
-        <AccordionItem bg="white" display={{ base: "block", md: "none" }} borderRadius={'xl'}>
+        <AccordionItem
+          bg="white"
+          display={{ base: "block", md: "none" }}
+          borderRadius={"xl"}
+        >
           <h2>
             <AccordionButton rounded="md">
               <Stack
