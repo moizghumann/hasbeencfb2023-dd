@@ -181,16 +181,16 @@ export default function Dashboard() {
         setIsLoading(false);
         setIsSubmittedForCurrentWeek(true);
 
-        window.location.reload()
+        window.location.reload();
 
-        toast({
-          title: "Success",
-          description: "Bets Submitted Successfully!",
-          duration: 4000,
-          position: "top-right",
-          isClosable: true,
-          status: "success",
-        });
+        // toast({
+        //   title: "Success",
+        //   description: "Bets Submitted Successfully!",
+        //   duration: 4000,
+        //   position: "top-right",
+        //   isClosable: true,
+        //   status: "success",
+        // });
         // onClose();
       }
     } catch (error) {
