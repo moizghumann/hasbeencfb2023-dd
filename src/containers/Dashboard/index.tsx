@@ -13,7 +13,7 @@ import {
   Tr,
   Text,
   Button,
-  useToast,
+  // useToast,
   Accordion,
   AccordionItem,
   AccordionButton,
@@ -28,7 +28,7 @@ import { db } from "../../firebase";
 import AllBets from "./AllBets";
 
 export default function Dashboard() {
-  const toast = useToast();
+  // const toast = useToast();
 
   // const { onClose } = useDisclosure();
 
@@ -151,14 +151,14 @@ export default function Dashboard() {
 
           window.location.reload();
 
-          toast({
-            title: "Success",
-            description: "Bets Submitted Successfully!",
-            duration: 4000,
-            position: "top-right",
-            isClosable: true,
-            status: "success",
-          });
+          // toast({
+          //   title: "Success",
+          //   description: "Bets Submitted Successfully!",
+          //   duration: 4000,
+          //   position: "top-right",
+          //   isClosable: true,
+          //   status: "success",
+          // });
           // onClose();
           return;
         }
