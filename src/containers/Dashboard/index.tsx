@@ -13,7 +13,7 @@ import {
   Tr,
   Text,
   Button,
-  // useToast,
+  useToast,
   Accordion,
   AccordionItem,
   AccordionButton,
@@ -28,7 +28,7 @@ import { db } from "../../firebase";
 import AllBets from "./AllBets";
 
 export default function Dashboard() {
-  // const toast = useToast();
+  const toast = useToast();
 
   // const { onClose } = useDisclosure();
 
@@ -70,24 +70,28 @@ export default function Dashboard() {
   useEffect(() => {
     // TODO: need check if this bet is resovled or not
     if (currentUser) {
-      const betsWeeks = Object.keys(RBets).sort();
+      let betsWeeksNo = Object.keys(RBets).map((w) => +w.replace("week-", ""));
 
-      if (betsWeeks.length > 0) {
-        // lastest week bets
-        const key = betsWeeks[betsWeeks.length - 1];
+      betsWeeksNo = betsWeeksNo.sort((a, b) => a - b);
 
-        const weekNumber = key.split("-")[1];
+      console.log("betsWeeksNo", betsWeeksNo);
+
+      if (betsWeeksNo.length > 0) {
+        // latest week bets
+        const weekNumber = betsWeeksNo[betsWeeksNo.length - 1];
+
+        // const weekNumber = key.split("-")[1];
         if (
-          !RBets["week-" + weekNumber].every(
+          !RBets["week-" + String(weekNumber)].every(
             (bet) => bet.status !== "in-progress"
           )
         ) {
-          setBets(RBets["week-" + weekNumber]);
+          setBets(RBets["week-" + String(weekNumber)]);
         }
 
         if (
-          RBets["week-" + weekNumber].length === 3 &&
-          !RBets["week-" + weekNumber].every(
+          RBets["week-" + String(weekNumber)].length === 3 &&
+          !RBets["week-" + String(weekNumber)].every(
             (bet) => bet.status !== "in-progress"
           )
         ) {
@@ -132,8 +136,13 @@ export default function Dashboard() {
     try {
       if (currentUser) {
         setIsLoading(true);
-        const betsWeeks = Object.keys(RBets);
-        const isPrevWeek = betsWeeks.length > 0;
+        let betsWeeksNo = Object.keys(RBets).map(
+          (w) => +w.replace("week-", "")
+        );
+
+        betsWeeksNo = betsWeeksNo.sort((a, b) => a - b);
+
+        const isPrevWeek = betsWeeksNo.length > 0;
 
         const __data = {
           "week-1": [...bets],
@@ -149,8 +158,6 @@ export default function Dashboard() {
           setIsSubmittedForCurrentWeek(true);
           setIsLoading(false);
 
-          window.location.reload();
-
           // toast({
           //   title: "Success",
           //   description: "Bets Submitted Successfully!",
@@ -163,9 +170,9 @@ export default function Dashboard() {
           return;
         }
 
-        const key = betsWeeks[betsWeeks.length - 1];
+        const weekNumber = betsWeeksNo[betsWeeksNo.length - 1];
 
-        const weekNumber = key.split("-")[1];
+        // const weekNumber = key.split("-")[1];
 
         const _data = {
           ...RBets,
@@ -181,8 +188,6 @@ export default function Dashboard() {
         setIsLoading(false);
         setIsSubmittedForCurrentWeek(true);
 
-        window.location.reload();
-
         // toast({
         //   title: "Success",
         //   description: "Bets Submitted Successfully!",
@@ -194,6 +199,14 @@ export default function Dashboard() {
         // onClose();
       }
     } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong please try again!",
+        duration: 4000,
+        position: "top-right",
+        isClosable: true,
+        status: "error",
+      });
       setIsLoading(false);
       console.log("SUBMIT_BET_ERROR", error);
     }
@@ -206,8 +219,8 @@ export default function Dashboard() {
   useEffect(() => {
     const now = new Date();
     const saturdayTime = new Date();
-    saturdayTime.setUTCHours(16, 0, 0); // 11 am CDT is 16:00 UTC
-    saturdayTime.setDate(saturdayTime.getDate() + (6 - saturdayTime.getDay())); // Find the next Saturday
+    saturdayTime.setUTCHours(18, 0, 0); // 11 am CDT is 16:00 UTC
+    saturdayTime.setDate(saturdayTime.getDate() + (3 - saturdayTime.getDay())); // Find the next Saturday
 
     const twentyFourHoursLater = new Date(saturdayTime);
     twentyFourHoursLater.setHours(twentyFourHoursLater.getHours() + 24);
