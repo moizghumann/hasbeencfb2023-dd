@@ -60,13 +60,21 @@ export default function AllBets({ allUsers }: any) {
       unsubscribe = onSnapshot(q, (querySnapshot) => {
         const _allBets = querySnapshot.docs.map((doc) => {
           const weeks = doc.data();
-          const betsWeeks = Object.keys(weeks).sort();
+          // const betsWeeks = Object.keys(weeks).sort();
 
-          const lastestWeek = betsWeeks[betsWeeks.length - 1];
+          // const latestWeek = betsWeeks[betsWeeks.length - 1];
+
+          let betsWeeksNo = Object.keys(weeks).map(
+            (w) => +w.replace("week-", "")
+          );
+
+          betsWeeksNo = betsWeeksNo.sort((a, b) => a - b);
+
+          const weekNumber = betsWeeksNo[betsWeeksNo.length - 1];
 
           return {
             id: doc.id,
-            guesses: weeks[lastestWeek],
+            guesses: weeks["week-" + String(weekNumber)],
           };
         });
 
