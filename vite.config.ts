@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [react()],
   define: {
     global: "window",
-    __APP_ENV__: process.env.VITE_VERCEL_ENV,
+    "process.env": process.env.VITE_VERCEL_ENV || {},
   },
 });
