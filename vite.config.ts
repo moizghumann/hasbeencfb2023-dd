@@ -6,8 +6,7 @@ export default defineConfig({
   plugins: [react()],
   define: {
     global: "window",
-    "process.env": {
-      ODDS_API_KEY: process.env.ODDS_API_KEY,
-    },
+    "process.env": process.env,
+    ODDS_API_KEY: process.env.ODDS_API_KEY,
   },
 });
