@@ -610,3 +610,88 @@ export default function Dashboard() {
     </Layout>
   );
 }
+
+// while (retryAttempts < MAX_RETRY_ATTEMPTS) {
+//   try {
+//     await new Promise((resolve) => setTimeout(resolve, backoffDelay));
+
+//     const res = await axios.get(
+//       `${API_SCORES_URL}/?apiKey=${ODDS_API_KEY}&eventIds=${gameId}&daysFrom=3`
+//     );
+
+//     const games = res.data;
+
+//     if (games) {
+//       const game = games[0];
+
+//       // games is completed!
+//       if (game && game?.completed) {
+//         let homeScore = parseInt(game.scores[0].score);
+//         let awayScore = parseInt(game.scores[1].score);
+
+//         if (game.scores[0].name === bet.team) {
+//           homeScore += bet.spread;
+//         } else if (game.scores[1].name === bet.team) {
+//           awayScore += bet.spread;
+//         }
+
+//         const totalGameScore =
+//           parseInt(game.scores[0].score) +
+//           parseInt(game.scores[1].score);
+
+//         let isTie = false;
+//         let winner = "";
+
+//         if (bet.type === "Spread") {
+//           if (homeScore > awayScore) {
+//             winner = game.home_team;
+//           } else if (homeScore < awayScore) {
+//             winner = game.away_team;
+//           } else {
+//             isTie = "It's a tie!";
+//           }
+
+//           if (winner === bet.team) {
+//             totalPoints += 1;
+//           }
+//           if (isTie) {
+//             totalPoints += 0;
+//           }
+//         }
+
+//         if (bet.type === "totals") {
+//           if (bet.totals === "Over" && totalGameScore > +bet.point) {
+//             winner = bet.team;
+//             totalPoints += 1;
+//           }
+
+//           if (bet.totals === "Under" && totalGameScore < +bet.point) {
+//             winner = bet.team;
+//             totalPoints += 1;
+//           }
+
+//           if (bet.total === totalGameScore) {
+//             // winner = bet.team;
+//             totalPoints += 0;
+//           }
+//         }
+
+//         _bets[i] = {
+//           ...bet,
+//           status: winner === bet.team ? "win" : "lost",
+//           gainedPoints: totalGameScore,
+//         };
+//       }
+//     }
+
+//     break; // Break out of the retry loop if the request is successful
+//   } catch (error) {
+//     if (error.response && error.response.status === 429) {
+//       // Retry the request with exponential backoff
+//       retryAttempts++;
+//       backoffDelay *= 2;
+//     } else {
+//       throw error; // Throw the error if it's not a 429 error
+//     }
+//   }
+// }

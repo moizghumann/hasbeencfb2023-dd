@@ -7,5 +7,6 @@ export default defineConfig({
   define: {
     global: "window",
     "process.env": {},
+    __APP_ENV__: process.env.VITE_VERCEL_ENV,
   },
 });
