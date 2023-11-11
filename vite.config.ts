@@ -7,6 +7,5 @@ export default defineConfig({
   define: {
     global: "window",
     "process.env": process.env,
-    ODDS_API_KEY: process.env.ODDS_API_KEY,
   },
 });
