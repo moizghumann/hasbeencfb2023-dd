@@ -3,5 +3,5 @@ export const EMAIL_REGEX =
   /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
 
 export const ODDS_API_KEY =
-  // import.meta.env.ODDS_API_KEY || "76873652c65271f478f9fc077e2fe144";
-  import.meta.env.ODDS_API_KEY || "6e7fa3ee2940ac9c0a307b28ff7eaff8";
+  process.env.ODDS_API_KEY || "76873652c65271f478f9fc077e2fe144";
+//  "6e7fa3ee2940ac9c0a307b28ff7eaff8";
