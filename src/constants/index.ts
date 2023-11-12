@@ -4,7 +4,7 @@ export const EMAIL_REGEX =
 
 console.log(import.meta.env);
 
-console.log("process.env", import.meta.env.ODDS_API_KEY);
+console.log("process.env", import.meta.env.VITE_VERCEL_ODDS_API_KEY);
 
 export const ODDS_API_KEY =
   import.meta.env.MODE === "production"
