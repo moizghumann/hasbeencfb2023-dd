@@ -38,7 +38,7 @@ export default function AllBets({ allUsers }: any) {
     } else {
       const now = new Date();
       const saturdayTime = new Date();
-      saturdayTime.setUTCHours(16, 0, 0); // 11 am CDT is 16:00 UTC
+      saturdayTime.setUTCHours(17, 0, 0); // 11 am CDT is 16:30 UTC
       saturdayTime.setDate(
         saturdayTime.getDate() + (6 - saturdayTime.getDay())
       ); // Find the next Saturday

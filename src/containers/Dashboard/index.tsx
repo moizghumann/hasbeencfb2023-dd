@@ -219,10 +219,13 @@ export default function Dashboard() {
   useEffect(() => {
     const now = new Date();
     const saturdayTime = new Date();
-    saturdayTime.setUTCHours(16, 0, 0); // 11 am CDT is 16:00 UTC
+    saturdayTime.setUTCHours(17, 0, 0); // 11 am CDT is 16:30 UTC
     saturdayTime.setDate(saturdayTime.getDate() + (6 - saturdayTime.getDay())); // Find the next Saturday
 
     const twentyFourHoursLater = new Date(saturdayTime);
+
+    console.log(twentyFourHoursLater);
+
     twentyFourHoursLater.setHours(twentyFourHoursLater.getHours() + 24);
 
     if (now >= saturdayTime && now < twentyFourHoursLater) {
