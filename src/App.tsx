@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./firebase";
 import { doc, getDoc, onSnapshot } from "firebase/firestore";
-import { Dashboard, Register, Signin } from "./containers";
+import { Dashboard, Register, Signin, Stats } from "./containers";
 import "./App.css";
 import { setBets, setCurrentUser } from "./slices/app";
 import { CSpinner } from "./components";
@@ -15,6 +15,11 @@ const routes = [
   {
     path: "/",
     Comp: Dashboard,
+    guarded: true,
+  },
+  {
+    path: "/stats",
+    Comp: Stats,
     guarded: true,
   },
   {
