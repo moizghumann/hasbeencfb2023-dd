@@ -6,7 +6,7 @@ import { setSelectedBet } from "../../slices/app";
 import {  doc,getDoc } from "firebase/firestore";
 import { db,auth } from "../../firebase";
 function CurrentPicks() {
-  const { selectedBets, bets: RBets } = useSelector(
+  const { selectedBets } = useSelector(
     (state: RootState) => state.app
   );
   const dispatch = useDispatch();
