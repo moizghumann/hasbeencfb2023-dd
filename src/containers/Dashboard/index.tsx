@@ -27,8 +27,8 @@ import {
   setBets as setRBets,
   setSelectedBet,
 } from "../../slices/app";
-import { setDoc, doc, collection, onSnapshot } from "firebase/firestore";
-import { db } from "../../firebase";
+import { setDoc, doc, collection, onSnapshot,getDoc } from "firebase/firestore";
+import { db,auth } from "../../firebase";
 import AllBets from "./AllBets";
 
 export default function Dashboard() {
@@ -43,10 +43,9 @@ export default function Dashboard() {
   const dispatch = useDispatch();
   const { data, isLoading: getDataLoading } = useGetSportsData();
 
-  const [allUsersMap, setAllUsersMap] = useState<{
+  const [allUsersMap, setAllUsersMap] = useState<{ 
     [key: string]: { id: string; name: string; email: string; points: number };
   }>({});
-
   const [allUsers, setAllUsers] = useState<
     { id: string; name: string; email: string; points: number }[]
   >([]);
@@ -108,8 +107,44 @@ export default function Dashboard() {
       }
     }
   }, [RBets]);
+useEffect(() => {
+  const checkIfSelectedBetsExist = async () => {
+    try {
+      const currUser = auth?.currentUser;
+      if (currUser) {
+        // Create a reference to the document for the selected user's bets
+        const selectedBetsRef = doc(db, "selectedBets", currUser.uid);
+  
+        // Fetch the document snapshot from Firestore
+        const selectedBetsSnap = await getDoc(selectedBetsRef);
+  
+        // Check if the document exists
+        if (selectedBetsSnap.exists()) {
+          // Document exists, retrieve data
+          const selectedBetsData = selectedBetsSnap.data();
+          setBets(selectedBetsData?.bets);
+          dispatch(setSelectedBet(selectedBetsData?.bets));
+          // const newFormat = JSON.stringify(selectedBetsData); 
+          console.log("Selected bets data from firestore:",selectedBetsData?.bets); 
+          // return selectedBetsData; // Return the data if needed
+        } else {
+          // Document does not exist
+          console.log("No selected bets found for the current user.");
+          // return null;
+        }
+      } else {
+        console.error("No current user found. Please log in.",currentUser,currUser);
+        // return null;
+      }
+    } catch (error) {
+      console.error("Error fetching selected bets:", error);
+      // return null;
+    }
+  };
+  checkIfSelectedBetsExist()
+},[])
 
-  const onSetBet = (bet: {
+  const onSetBet = async (bet: {
     gameId: string;
     status: string;
     team?: string;
@@ -118,24 +153,38 @@ export default function Dashboard() {
     totals?: string;
     point?: number;
   }) => {
-    dispatch(setSelectedBet([...selectedBets, { ...bet }]));
-
-    setBets((prevState) => [
-      ...prevState,
-      {
-        ...bet,
-      },
-    ]);
+    const updatedBets = [...bets, bet]; // Prepare the updated bets array
+    const isBetStored = await storeSelectedBets(updatedBets);
+    
+    if (isBetStored) {
+      dispatch(setSelectedBet(updatedBets));
+      setBets(updatedBets);
+    } else {
+      alert("Please check your internet connection and try again!");
+    }
   };
 
-  const removeBet = (gameId: string, type: string) => {
-    setBets(
-      bets.filter((bet) => {
-        return bet.gameId !== gameId || type !== bet.type;
-      })
-    );
+  const removeBet = async (gameId: string, type: string) => {
+    const updatedBets = bets.filter((bet) => bet.gameId !== gameId || bet.type !== type);
+      setBets(updatedBets);
   };
-
+  const storeSelectedBets = async (bets:any) => {
+    try {
+      const currUser = auth?.currentUser;
+      if (currUser) {
+        const selectedBetsRef = doc(db, "selectedBets", currUser.uid);
+        await setDoc(selectedBetsRef, { bets }, { merge: true });
+        console.log("Bets stored in backend:", bets);
+        return true;
+      } else {
+        console.error("No current user found. Please log in.");
+        return false;
+      }
+    } catch (error) {
+      console.error("Bets not stored, please try again:", error);
+      return false;
+    }
+  };
   const onBetsSubmit = async () => {
     try {
       if (currentUser) {
@@ -216,9 +265,13 @@ export default function Dashboard() {
     }
   };
 
-  const onRemoveBet = (currentIndex: number) => {
+  const onRemoveBet = async (currentIndex: number) => {
+    const updatedBets = bets.filter((_, i) => i !== currentIndex);
+    const isBetStored = await storeSelectedBets(updatedBets);
+    if(isBetStored){ 
     dispatch(setSelectedBet(selectedBets.filter((_, i) => i !== currentIndex)));
-    setBets(bets.filter((_, i) => i !== currentIndex));
+    setBets(updatedBets);
+    }
   };
 
   useEffect(() => {
