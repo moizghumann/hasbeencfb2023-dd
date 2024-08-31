@@ -10,17 +10,9 @@ import { RootState } from "../../../slices/store";
 import { setBets, setCurrentUser } from "../../../slices/app";
 import myImage from "../../../assets/fire.svg";
 
-interface User {
-  uid: string;
-  email: string;
-  name: string;
-  points?: number;
-  role?: string;
-}
-
 const Header = () => {
   const dispatch = useDispatch();
-  const currUser: User | any  | null = auth?.currentUser;
+
   const navigate = useNavigate();
 
   const { currentUser } = useSelector((state: RootState) => state.app);
@@ -49,7 +41,7 @@ const Header = () => {
           </Box>
 
           <HStack spacing={3} alignItems="center">
-            {currUser ? (
+            {currentUser ? (
               <HStack>
                 <Button as={Link} to="/stats" colorScheme="orange">
                   Your Stats
@@ -68,7 +60,7 @@ const Header = () => {
                     display="grid"
                     placeContent="center"
                   >
-                    {currUser?.points ? currUser?.points : 0}
+                    {currentUser.points ? currentUser.points : 0}
                   </Text>
                 </Box>
               </HStack>

@@ -4,4 +4,4 @@ export const EMAIL_REGEX =
 
 export const ODDS_API_KEY =
   import.meta.env.VITE_VERCEL_ODDS_API_KEY ||
-  "3d8db7f9bf847d840ba6b9f6a75dcf95";
+  "45710ede53833fd76d543b75da1bc759";

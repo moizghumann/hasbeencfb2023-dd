@@ -128,6 +128,7 @@ interface CDashboardProps {
 
 export default function CDashboard(props: CDashboardProps) {
   const { data, isLoading, bets, onSetBet, removeBet } = props;
+
   return (
     <Box w="full" maxW={{ base: "full", md: "full" }} mx="auto">
       <Stack direction={{ base: "column", md: "row" }} gap="5" h="full">
