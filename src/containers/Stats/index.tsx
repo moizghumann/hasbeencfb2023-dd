@@ -1,3 +1,4 @@
+import React from "react";
 import { CStats, Layout } from "../../components";
 
 function Stats() {

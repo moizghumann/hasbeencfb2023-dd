@@ -1,3 +1,4 @@
+import React from "react";
 import { VStack } from "@chakra-ui/react";
 import CurrentPicks from "./CurrentPicks";
 import PreviousWeekStats from "./PreviousWeekStats";
