@@ -15,18 +15,6 @@ interface ICurrentUser {
   // }[];
 }
 
-interface SelectedBet {
-  gameId: string;
-  status: string;
-  team?: string;
-  type: string; // spread or totals
-  spread?: number;
-  totals?: string;
-  point?: number;
-  home_team?: string;
-  away_team?: string;
-}
-
 interface IBets {
   [key: string]: {
     gameId: string;
@@ -40,11 +28,9 @@ interface IBets {
 const initialState: {
   currentUser: ICurrentUser | null;
   bets: IBets;
-  selectedBets: SelectedBet[];
 } = {
   currentUser: null,
   bets: {},
-  selectedBets: [],
 };
 
 const appSlice = createSlice({
@@ -56,14 +42,6 @@ const appSlice = createSlice({
     },
     setBets: (state, action) => {
       state.bets = { ...action.payload };
-    },
-    setSelectedBet: (state, action) => {
-      state.selectedBets = action.payload;
-    },
-    resetAppState: (state) => {
-      state.currentUser = null;
-      state.bets = {};
-      state.selectedBets = [];
     },
     // setCurrentGuesses: (state, action) => {
     //   if (state.currentUser) {
@@ -78,7 +56,6 @@ const appSlice = createSlice({
   },
 });
 
-export const { setCurrentUser, setBets, setSelectedBet, resetAppState } =
-  appSlice.actions;
+export const { setCurrentUser, setBets } = appSlice.actions;
 
 export default appSlice.reducer;

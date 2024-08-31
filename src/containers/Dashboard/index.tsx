@@ -22,11 +22,7 @@ import {
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../slices/store";
-import {
-  resetAppState,
-  setBets as setRBets,
-  setSelectedBet,
-} from "../../slices/app";
+import { setBets as setRBets } from "../../slices/app";
 import { setDoc, doc, collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import AllBets from "./AllBets";
@@ -34,12 +30,11 @@ import AllBets from "./AllBets";
 export default function Dashboard() {
   const toast = useToast();
 
-  const {
-    bets: RBets,
-    currentUser,
-    selectedBets,
-  } = useSelector((state: RootState) => state.app);
+  // const { onClose } = useDisclosure();
 
+  const { bets: RBets, currentUser } = useSelector(
+    (state: RootState) => state.app
+  );
   const dispatch = useDispatch();
   const { data, isLoading: getDataLoading } = useGetSportsData();
 
@@ -73,15 +68,13 @@ export default function Dashboard() {
   const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
-    dispatch(resetAppState());
-  }, []);
-
-  useEffect(() => {
     // TODO: need check if this bet is resovled or not
     if (currentUser) {
       let betsWeeksNo = Object.keys(RBets).map((w) => +w.replace("week-", ""));
 
       betsWeeksNo = betsWeeksNo.sort((a, b) => a - b);
+
+      console.log("betsWeeksNo", betsWeeksNo);
 
       if (betsWeeksNo.length > 0) {
         // latest week bets
@@ -93,7 +86,6 @@ export default function Dashboard() {
             (bet) => bet.status !== "in-progress"
           )
         ) {
-          dispatch(setSelectedBet(RBets["week-" + String(weekNumber)]));
           setBets(RBets["week-" + String(weekNumber)]);
         }
 
@@ -107,6 +99,12 @@ export default function Dashboard() {
         }
       }
     }
+
+    () => {
+      setBets([]);
+
+      return;
+    };
   }, [RBets]);
 
   const onSetBet = (bet: {
@@ -118,8 +116,6 @@ export default function Dashboard() {
     totals?: string;
     point?: number;
   }) => {
-    dispatch(setSelectedBet([...selectedBets, { ...bet }]));
-
     setBets((prevState) => [
       ...prevState,
       {
@@ -217,7 +213,6 @@ export default function Dashboard() {
   };
 
   const onRemoveBet = (currentIndex: number) => {
-    dispatch(setSelectedBet(selectedBets.filter((_, i) => i !== currentIndex)));
     setBets(bets.filter((_, i) => i !== currentIndex));
   };
 
@@ -350,7 +345,7 @@ export default function Dashboard() {
                 </Thead>
                 <Tbody>
                   {bets.map((bet, i) => (
-                    <Tr bgColor="#F3F4F7" key={i}>
+                    <Tr bgColor="#F3F4F7">
                       <Td
                         display={isSubmittedForCurrentWeek ? "none" : "block"}
                       >
@@ -446,9 +441,9 @@ export default function Dashboard() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {allUsers.map((user, i) => {
+                  {allUsers.map((user) => {
                     return (
-                      <Tr bgColor="#F3F4F7" key={i}>
+                      <Tr bgColor="#F3F4F7">
                         <Td key={user.id} textAlign="center">
                           {user?.name}
                         </Td>
@@ -514,7 +509,7 @@ export default function Dashboard() {
                 </Thead>
                 <Tbody>
                   {bets.map((bet, i) => (
-                    <Tr bgColor="#F3F4F7" key={i}>
+                    <Tr bgColor="#F3F4F7">
                       <Td
                         display={isSubmittedForCurrentWeek ? "none" : "block"}
                       >
@@ -589,9 +584,9 @@ export default function Dashboard() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {allUsers.map((user, i) => {
+                  {allUsers.map((user) => {
                     return (
-                      <Tr bgColor="#F3F4F7" key={i}>
+                      <Tr bgColor="#F3F4F7">
                         <Td key={user.id} textAlign="center">
                           {user?.name}
                         </Td>

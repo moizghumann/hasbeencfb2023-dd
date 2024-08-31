@@ -7,4 +7,3 @@ export { default as CSignin } from "./Signin";
 export { default as CRegister } from "./Register";
 
 export { default as CSpinner } from "./Shared/Spinner";
-export { default as CStats } from "./Stats";
